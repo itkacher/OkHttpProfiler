@@ -1,0 +1,81 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "0.1"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "LOG_PREFIX",  "\"_OKPRFL:\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+task deleteJar(type: Delete) {
+    delete 'libs/jars/okprofiler.jar'
+}
+
+task createJar(type: Copy) {
+    from('build/intermediates/bundles/release/')
+    into('libs/jars/')
+    include('classes.jar')
+    rename('classes.jar', 'okprofiler.jar')
+}
+
+createJar.dependsOn(deleteJar, build)
+
+dependencies {
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
+    testImplementation 'junit:junit:4.12'
+}
+repositories {
+    mavenCentral()
+}
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'itkacher'
+
+    publishedGroupId = 'com.itkacher.okhttpprofiler'
+    libraryName = 'Okhttp Profiler'
+    artifact = 'okhttpprofiler'
+
+    libraryDescription = 'This library is using for Android Studio plugin Okhttp Profiler'
+
+    siteUrl = 'https://github.com/itkacher/OkHttpProfiler'
+    gitUrl = 'https://github.com/itkacher/OkHttpProfiler.git'
+
+    libraryVersion = '0.0.1'
+
+    developerId = 'itkacher'
+    developerName = 'Ievgenii Tkachenko'
+    developerEmail = 'itkacher@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply from: './jcenter.gradle'
