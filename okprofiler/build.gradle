@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -13,7 +12,6 @@ android {
         versionName "0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "LOG_PREFIX",  "\"_OKPRFL:\""
     }
 
     buildTypes {
@@ -29,19 +27,6 @@ android {
     }
 
 }
-
-task deleteJar(type: Delete) {
-    delete 'libs/jars/okprofiler.jar'
-}
-
-task createJar(type: Copy) {
-    from('build/intermediates/bundles/release/')
-    into('libs/jars/')
-    include('classes.jar')
-    rename('classes.jar', 'okprofiler.jar')
-}
-
-createJar.dependsOn(deleteJar, build)
 
 dependencies {
     api 'com.squareup.okhttp3:okhttp:3.10.0'
@@ -75,7 +60,7 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 
-
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-apply from: './jcenter.gradle'
+apply from: 'jcenter.gradle'
+//apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.jfrog.bintray'
+//apply from: './jcenter.gradle'
