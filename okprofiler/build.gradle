@@ -9,7 +9,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "0.1"
+        versionName "0.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -37,12 +37,9 @@ repositories {
 }
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'itkacher'
-
-    publishedGroupId = 'com.itkacher.okhttpprofiler'
-    libraryName = 'Okhttp Profiler'
-    artifact = 'okhttpprofiler'
+    repoName = 'okhttpprofiler'
+    artifactId = 'com.itkacher.okhttpprofiler'
+    publisher = 'itkacher'
 
     libraryDescription = 'This library is using for Android Studio plugin Okhttp Profiler'
 
@@ -61,6 +58,3 @@ ext {
 }
 
 apply from: 'jcenter.gradle'
-//apply plugin: 'com.github.dcendents.android-maven'
-//apply plugin: 'com.jfrog.bintray'
-//apply from: './jcenter.gradle'
