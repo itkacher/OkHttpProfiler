@@ -16,3 +16,5 @@ Kotlin
 
 https://plugins.jetbrains.com/plugin/11249-okhttp-profiler
 
+![Screen1](https://github.com/itkacher/OkHttpProfiler/blob/master/screen1.png?raw=true)
+![Screen2](https://github.com/itkacher/OkHttpProfiler/blob/master/screen2.png?raw=true)
