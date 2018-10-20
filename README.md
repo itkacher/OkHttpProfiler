@@ -28,6 +28,8 @@ and add Interceptor to okHttpClient in code
                 ......
                 .client(client)
                 .build();
+                
+                
 ###### Kotlin
     val client = OkHttpClient.Builder().addInterceptor( OkHttpProfilerInterceptor() ).build()
     val retrofit = Retrofit.Builder()
@@ -35,12 +37,15 @@ and add Interceptor to okHttpClient in code
             .client(client)
             .build()
 
+
 ####And then enable Android Studio plugin
 
 https://plugins.jetbrains.com/plugin/11249-okhttp-profiler
+
 ![Screen2](https://github.com/itkacher/OkHttpProfiler/blob/master/plugin_install1.png?raw=true)
+
 ![Screen3](https://github.com/itkacher/OkHttpProfiler/blob/master/plugin_install2.png?raw=true)
 
-####Have fun!
-
 ![Screen4](https://github.com/itkacher/OkHttpProfiler/blob/master/screen2.png?raw=true)
+
+####Have fun!
