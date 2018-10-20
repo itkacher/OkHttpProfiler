@@ -38,7 +38,7 @@ and add Interceptor to okHttpClient in code
             .build()
 
 
-####And then enable Android Studio plugin
+#### And then enable Android Studio plugin
 
 https://plugins.jetbrains.com/plugin/11249-okhttp-profiler
 
@@ -48,4 +48,4 @@ https://plugins.jetbrains.com/plugin/11249-okhttp-profiler
 
 ![Screen4](https://github.com/itkacher/OkHttpProfiler/blob/master/screen2.png?raw=true)
 
-####Have fun!
+## Have fun!
