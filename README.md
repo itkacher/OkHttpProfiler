@@ -18,7 +18,7 @@ and add Interceptor to okHttpClient in code
      if (BuildConfig.DEBUG) {
          builder.addInterceptor(new OkHttpProfilerInterceptor());
      }   
-    OkHttpClient mClient = builder.build(); 
+    OkHttpClient client = builder.build(); 
 
 ###### Kotlin
     val builder = OkHttpClient.Builder()
@@ -33,7 +33,7 @@ and add Interceptor to okHttpClient in code
      if (BuildConfig.DEBUG) {
          builder.addInterceptor(new OkHttpProfilerInterceptor());
      }   
-    OkHttpClient mClient = builder.build(); 
+    OkHttpClient client = builder.build(); 
     Retrofit retrofit = new Retrofit.Builder()
                 ......
                 .client(client)
