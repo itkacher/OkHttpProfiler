@@ -1,4 +1,3 @@
-//https://github.com/bintray/bintray-examples/blob/master/gradle-bintray-plugin-examples/android-gradle-3.0.0-maven-example/app/publish.gradle
 
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'

@@ -14,16 +14,26 @@ For installation you need to include library to your app build.gradle file
 and add Interceptor to okHttpClient in code
 ##### For OkHttp
 ###### Java
-
-    OkHttpClient mClient = new OkHttpClient.Builder().addInterceptor( new OkHttpProfilerInterceptor() ).build(); 
+    OkHttpClient.Builder builder = new OkHttpClient.Builder();
+     if (BuildConfig.DEBUG) {
+         builder.addInterceptor(new OkHttpProfilerInterceptor());
+     }   
+    OkHttpClient mClient = builder.build(); 
 
 ###### Kotlin
-
-    val client = OkHttpClient.Builder().addInterceptor( OkHttpProfilerInterceptor() ).build()
-
+    val builder = OkHttpClient.Builder()
+    if (BuildConfig.DEBUG) {
+        builder.addInterceptor(OkHttpProfilerInterceptor() )
+    }    
+    val client = builder.build()
+    
 ##### For Retrofit
 ###### Java
-    OkHttpClient mClient = new OkHttpClient.Builder().addInterceptor( new OkHttpProfilerInterceptor() ).build(); 
+    OkHttpClient.Builder builder = new OkHttpClient.Builder();
+     if (BuildConfig.DEBUG) {
+         builder.addInterceptor(new OkHttpProfilerInterceptor());
+     }   
+    OkHttpClient mClient = builder.build(); 
     Retrofit retrofit = new Retrofit.Builder()
                 ......
                 .client(client)
@@ -31,12 +41,18 @@ and add Interceptor to okHttpClient in code
                 
                 
 ###### Kotlin
-    val client = OkHttpClient.Builder().addInterceptor( OkHttpProfilerInterceptor() ).build()
+    val builder = OkHttpClient.Builder()
+    if (BuildConfig.DEBUG) {
+        builder.addInterceptor( OkHttpProfilerInterceptor() )
+    }    
+    val client = builder.build()
     val retrofit = Retrofit.Builder()
             ......
             .client(client)
             .build()
 
+##### For security reasons we recommend enable OkHttpProfilerInterceptor only for DEBUG BUILDS! 
+also Proguard will cut it out in release build.
 
 #### And then enable Android Studio plugin
 

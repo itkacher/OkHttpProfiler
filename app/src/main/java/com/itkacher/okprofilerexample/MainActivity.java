@@ -28,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.send_request).setOnClickListener(v -> {
             sendRequest();
         });
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(new OkHttpProfilerInterceptor());
+        }
+        OkHttpClient mClient = builder.build();
     }
 
     private void sendRequest() {

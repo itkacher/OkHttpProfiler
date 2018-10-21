@@ -31,5 +31,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:0.0.1'
-//    implementation project(path: ':okprofiler')
 }
