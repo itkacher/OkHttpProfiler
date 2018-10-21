@@ -51,7 +51,7 @@ and add Interceptor to okHttpClient in code
             .client(client)
             .build()
 
-##### For security reasons we recommend enable OkHttpProfilerInterceptor only for DEBUG BUILDS! 
+##### For security reasons we recommend to enable OkHttpProfilerInterceptor only for DEBUG BUILDS! 
 also Proguard will cut it out in release build.
 
 #### And then enable Android Studio plugin
