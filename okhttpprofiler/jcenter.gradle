@@ -2,12 +2,12 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-version '0.0.2'
+version '1.0.0'
 
 publishing {
     publications {
         Production(MavenPublication) {
-            artifact("$buildDir/outputs/aar/okprofiler-release.aar")
+            artifact("$buildDir/outputs/aar/okhttpprofiler-release.aar")
             groupId "com.itkacher.okhttpprofiler"
             artifactId "okhttpprofiler"
             version this.version
