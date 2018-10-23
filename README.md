@@ -6,7 +6,8 @@ It supports okhttp v3 (http://square.github.io/okhttp/) or Retrofit v2 (https://
 ![Screen1](https://github.com/itkacher/OkHttpProfiler/blob/master/screen1.png?raw=true)
 
 ---
-
+[ ![Download](https://api.bintray.com/packages/itkacher/okhttpprofiler/com.itkacher.okhttpprofiler/images/download.svg) ](https://bintray.com/itkacher/okhttpprofiler/com.itkacher.okhttpprofiler/_latestVersion)
+ 
 For installation you need to include library to your app build.gradle file
 
     implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.1' 
