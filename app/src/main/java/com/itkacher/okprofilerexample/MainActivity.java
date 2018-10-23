@@ -15,7 +15,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String JSON_URL = "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/colors.json";
+    private static final String JSON_URL = "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/large_random_json.json";
+//    private static final String JSON_URL = "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/colors.json";
     private OkHttpClient mClient = new OkHttpClient.Builder().addInterceptor(
             new OkHttpProfilerInterceptor()
     ).build();
