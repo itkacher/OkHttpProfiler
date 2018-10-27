@@ -1,0 +1,100 @@
+{
+  "listNestedObject": [
+    [
+      {
+        "val": 1
+      }
+    ],
+    [
+      {
+        "val": 2
+      }
+    ]
+  ],
+  "listNestedPrimitive": [
+    [
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "listDeepNestedPrimitive": [
+    [
+      [
+        [
+          [
+            [
+              [
+                1
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ],
+  "listOfListOfListPrimitive": [
+    [
+      [
+        [
+          [
+            [
+              [
+                {
+                  "term": "string",
+                  "object": null
+                }
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ],
+  "object": {
+    "_id": "5bcf064f60164035b4a94228",
+    "index": 0,
+    "guid": "8a231d1c-7b38-4a4d-a7e9-603fdbcedd0a",
+    "isActive": false,
+    "balance": "$1,011.38",
+    "picture": "http://placehold.it/32x32",
+    "age": 28,
+    "eyeColor": "blue",
+    "name": "Lorie Lee",
+    "gender": "female",
+    "company": "ESCHOIR",
+    "email": "lorielee@eschoir.com",
+    "phone": "+1 (876) 409-3048",
+    "address": "357 Clarendon Road, Sussex, North Carolina, 7924",
+    "about": "Do deserunt aute duis dolor dolor nostrud ullamco dolor aute qui aliqua mollit ut esse. Ea mollit qui do et deserunt labore commodo labore duis est. Sit dolor eu officia labore excepteur duis ea do aliquip consectetur. Sint excepteur veniam veniam veniam aute in aliqua sit quis Lorem.\r\n",
+    "registered": "2014-04-04T12:40:01 -03:00",
+    "latitude": -84.768694,
+    "longitude": 42.911969,
+    "tags": [
+      "eu",
+      "nostrud",
+      "aliquip",
+      "do",
+      "id",
+      "do",
+      "quis"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Luann Cleveland"
+      },
+      {
+        "id": 1,
+        "name": "Watson Dunn"
+      },
+      {
+        "id": 2,
+        "name": "Morgan Finley"
+      }
+    ],
+    "greeting": "Hello, Lorie Lee! You have 9 unread messages.",
+    "favoriteFruit": "strawberry"
+  }
+}
