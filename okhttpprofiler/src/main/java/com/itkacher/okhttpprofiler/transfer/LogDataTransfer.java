@@ -129,7 +129,6 @@ public class LogDataTransfer implements DataTransfer {
             Bundle bundle = msg.getData();
             if(bundle != null) {
                 try {
-                    // TODO Remove this shit. Find a better way do not crash the logs with large json
                     Thread.sleep(5L);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
