@@ -10,7 +10,7 @@ It supports okhttp v3 (http://square.github.io/okhttp/) or Retrofit v2 (https://
  
 For installation you need to include library to your app build.gradle file
 
-    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.1' 
+    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.2'
 
 and add Interceptor to okHttpClient in code
 ##### For OkHttp
