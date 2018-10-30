@@ -1,5 +1,6 @@
 package com.itkacher.okhttpprofiler.transfer;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -19,11 +20,14 @@ import okio.Buffer;
 
 public class LogDataTransfer implements DataTransfer {
     private static final int LOG_LENGTH = 255;
+    private static final int SLOW_DOWN_PARTS_AFTER = 20;
+    private static final int BODY_BUFFER_SIZE = 1024 * 1024 * 10;
     private static final String LOG_PREFIX = "OKPRFL";
     private static final String DELIMITER = "_";
     private static final String HEADER_DELIMITER = ":";
     private static final String KEY_TAG = "TAG";
     private static final String KEY_VALUE = "VALUE";
+    private static final String KEY_PARTS_COUNT = "PARTS_COUNT";
     private final Handler mHandler;
 
     public LogDataTransfer() {
@@ -40,8 +44,9 @@ public class LogDataTransfer implements DataTransfer {
         fastLog(id, MessageType.REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
         Headers headers = request.headers();
         if (headers != null) {
+            int headersSize = headers.size();
             for (String name : headers.names()) {
-                logWithHandler(id, MessageType.REQUEST_HEADER, name + ":" + headers.get(name));
+                logWithHandler(id, MessageType.REQUEST_HEADER, name + ":" + headers.get(name), headersSize);
             }
         }
 
@@ -60,43 +65,47 @@ public class LogDataTransfer implements DataTransfer {
     @Override
     public void sendResponse(String id, Response response) {
         try {
-            ResponseBody responseBodyCopy = response.peekBody(Long.MAX_VALUE);
+            ResponseBody responseBodyCopy = response.peekBody(BODY_BUFFER_SIZE);
             largeLog(id, MessageType.RESPONSE_BODY, responseBodyCopy.string());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         Headers headers = response.headers();
-        logWithHandler(id, MessageType.RESPONSE_STATUS, String.valueOf(response.code()));
+        logWithHandler(id, MessageType.RESPONSE_STATUS, String.valueOf(response.code()), 0);
         if (headers != null) {
             for (String name : headers.names()) {
-                logWithHandler(id, MessageType.RESPONSE_HEADER, name + HEADER_DELIMITER + headers.get(name));
+                logWithHandler(id, MessageType.RESPONSE_HEADER, name + HEADER_DELIMITER + headers.get(name), 0);
             }
         }
     }
 
     @Override
     public void sendException(String id, Exception response) {
-        logWithHandler(id, MessageType.RESPONSE_ERROR, response.getLocalizedMessage());
+        logWithHandler(id, MessageType.RESPONSE_ERROR, response.getLocalizedMessage(), 0);
     }
 
     @Override
     public void sendDuration(String id, long duration) {
-        logWithHandler(id, MessageType.RESPONSE_TIME, String.valueOf(duration));
-        logWithHandler(id, MessageType.RESPONSE_END, "-->");
+        logWithHandler(id, MessageType.RESPONSE_TIME, String.valueOf(duration), 0);
+        logWithHandler(id, MessageType.RESPONSE_END, "-->", 0);
     }
 
+    @SuppressLint("LogNotTimber")
     private void fastLog(String id, MessageType type, String message) {
         String tag = LOG_PREFIX + DELIMITER + id + DELIMITER + type.name;
-        Log.d(tag, message);
+        if(message != null) {
+            Log.v(tag, message);
+        }
     }
 
-    private void logWithHandler(String id, MessageType type, String message) {
+    private void logWithHandler(String id, MessageType type, String message, int partsCount) {
         Message handlerMessage = mHandler.obtainMessage();
         String tag = LOG_PREFIX + DELIMITER + id + DELIMITER + type.name;
         Bundle bundle = new Bundle();
         bundle.putString(KEY_TAG, tag);
         bundle.putString(KEY_VALUE, message);
+        bundle.putInt(KEY_PARTS_COUNT, partsCount);
         handlerMessage.setData(bundle);
         mHandler.sendMessage(handlerMessage);
     }
@@ -111,10 +120,10 @@ public class LogDataTransfer implements DataTransfer {
                 if (end > contentLength) {
                     end = contentLength;
                 }
-                logWithHandler(id, type, content.substring(start, end));
+                logWithHandler(id, type, content.substring(start, end), parts);
             }
         } else {
-            logWithHandler(id, type, content);
+            logWithHandler(id, type, content, 0);
         }
     }
 
@@ -124,16 +133,24 @@ public class LogDataTransfer implements DataTransfer {
             super(looper);
         }
 
+        @SuppressLint("LogNotTimber")
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
             if(bundle != null) {
-                try {
-                    Thread.sleep(5L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                int partsCount = bundle.getInt(KEY_PARTS_COUNT, 0);
+                if(partsCount > SLOW_DOWN_PARTS_AFTER) {
+                    try {
+                        Thread.sleep(5L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-                Log.d(bundle.getString(KEY_TAG), bundle.getString(KEY_VALUE));
+                String data = bundle.getString(KEY_VALUE);
+                String key = bundle.getString(KEY_TAG);
+                if(data != null && key != null) {
+                    Log.v(key, data);
+                }
             }
         }
     }
