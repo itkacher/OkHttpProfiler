@@ -8,7 +8,7 @@ Just click the right mouse button on a root element of the tree (or any other), 
 
 ![Screen1](https://github.com/itkacher/OkHttpProfiler/blob/master/screen1.png?raw=true)
 
-**Youtube preview:**
+**Youtube preview (click for watching)**
 
 [![OkHttpProfiler](http://img.youtube.com/vi/OfYzSBMJPfs/0.jpg)](https://www.youtube.com/watch?v=OfYzSBMJPfs "OkHttpProfiler")
 
