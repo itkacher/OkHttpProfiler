@@ -1,16 +1,24 @@
 # OkHttpProfiler
 
-OkHttp Profiler plugin can show request from okhttp library directly in your Android Studio toolwindow.
+The OkHttp Profiler plugin can show request from the OkHttp library directly in the Android Studio tool window.
 It supports okhttp v3 (http://square.github.io/okhttp/) or Retrofit v2 (https://square.github.io/retrofit/)
 
+You can explore request/response headers, inspect the JSON as a tree, as a plain text etc. And you can easily **create a Java/Kotlin model from the data**. 
+Just click the right mouse button on a root element of the tree (or any other), choose Java or Kotlin, and select a folder for a new file in the project.
+
 ![Screen1](https://github.com/itkacher/OkHttpProfiler/blob/master/screen1.png?raw=true)
+
+Youtube preview:
+[![OkHttpProfiler](http://img.youtube.com/vi/OfYzSBMJPfs/0.jpg)](https://www.youtube.com/watch?v=OfYzSBMJPfs "OkHttpProfiler")
 
 ---
 [ ![Download](https://api.bintray.com/packages/itkacher/okhttpprofiler/com.itkacher.okhttpprofiler/images/download.svg) ](https://bintray.com/itkacher/okhttpprofiler/com.itkacher.okhttpprofiler/_latestVersion)
  
+## Installation 
+
 For installation you need to include library to your app build.gradle file
 
-    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.2'
+    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.1' 
 
 and add Interceptor to okHttpClient in code
 ##### For OkHttp
@@ -65,4 +73,4 @@ https://plugins.jetbrains.com/plugin/11249-okhttp-profiler
 
 ![Screen4](https://github.com/itkacher/OkHttpProfiler/blob/master/screen2.png?raw=true)
 
-## Have fun!
+**Have fun!**
