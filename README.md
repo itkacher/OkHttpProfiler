@@ -17,7 +17,7 @@ Just click the right mouse button on a root element of the tree (or any other), 
  
 ## Installation 
 
-For installation you need to include library to your app build.gradle file
+For installation, you need to include the library to your app build.gradle file
 
     implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.2' 
 
@@ -62,7 +62,7 @@ and add Interceptor to okHttpClient in code
             .build()
 
 ##### For security reasons we recommend to enable OkHttpProfilerInterceptor only for DEBUG BUILDS! 
-also Proguard will cut it out in release build.
+Also Proguard will cut it out in the release build.
 
 #### And then enable Android Studio plugin
 
