@@ -10,8 +10,6 @@ Just click the right mouse button on a root element of the tree (or any other), 
 
 ![Screen2](https://github.com/itkacher/OkHttpProfiler/blob/master/demo.png?raw=true)
 
-![Screen3](https://github.com/itkacher/OkHttpProfiler/blob/master/demo.webp?raw=true)
-
 ---
 [ ![Download](https://api.bintray.com/packages/itkacher/okhttpprofiler/com.itkacher.okhttpprofiler/images/download.svg) ](https://bintray.com/itkacher/okhttpprofiler/com.itkacher.okhttpprofiler/_latestVersion)
  
