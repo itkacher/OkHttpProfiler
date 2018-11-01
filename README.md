@@ -8,9 +8,9 @@ Just click the right mouse button on a root element of the tree (or any other), 
 
 ![Screen1](https://github.com/itkacher/OkHttpProfiler/blob/master/screen1.png?raw=true)
 
-**Youtube preview (click for watching)**
+![Screen2](https://github.com/itkacher/OkHttpProfiler/blob/master/demo.png?raw=true)
 
-[![OkHttpProfiler](http://img.youtube.com/vi/OfYzSBMJPfs/0.jpg)](https://www.youtube.com/watch?v=OfYzSBMJPfs "OkHttpProfiler")
+![Screen3](https://github.com/itkacher/OkHttpProfiler/blob/master/demo.webp?raw=true)
 
 ---
 [ ![Download](https://api.bintray.com/packages/itkacher/okhttpprofiler/com.itkacher.okhttpprofiler/images/download.svg) ](https://bintray.com/itkacher/okhttpprofiler/com.itkacher.okhttpprofiler/_latestVersion)
