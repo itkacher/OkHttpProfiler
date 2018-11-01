@@ -6,8 +6,6 @@ It supports okhttp v3 (http://square.github.io/okhttp/) or Retrofit v2 (https://
 You can **debug OkHttp request** or response headers, inspect the JSON as a tree, as a plain text etc. And you can easily **create a Java/Kotlin model from the data**. 
 Just click the right mouse button on a root element of the tree (or any other), choose Java or Kotlin, and select a folder for a new file in the project.
 
-![Screen1](https://github.com/itkacher/OkHttpProfiler/blob/master/screen1.png?raw=true)
-
 ![Screen2](https://github.com/itkacher/OkHttpProfiler/blob/master/demo.png?raw=true)
 
 ---
@@ -69,6 +67,8 @@ https://plugins.jetbrains.com/plugin/11249-okhttp-profiler
 ![Screen2](https://github.com/itkacher/OkHttpProfiler/blob/master/plugin_install1.png?raw=true)
 
 ![Screen3](https://github.com/itkacher/OkHttpProfiler/blob/master/plugin_install2.png?raw=true)
+
+![Screen1](https://github.com/itkacher/OkHttpProfiler/blob/master/screen1.png?raw=true)
 
 ![Screen4](https://github.com/itkacher/OkHttpProfiler/blob/master/screen2.png?raw=true)
 
