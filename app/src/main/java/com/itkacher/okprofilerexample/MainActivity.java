@@ -42,8 +42,16 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
             }
 
+            @SuppressWarnings("unused")
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
+                try {
+                    if (response.body() != null) {
+                        String unusedText = response.body().string();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
