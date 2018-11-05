@@ -19,7 +19,7 @@ import okhttp3.ResponseBody;
 import okio.Buffer;
 
 public class LogDataTransfer implements DataTransfer {
-    private static final int LOG_LENGTH = 255;
+    private static final int LOG_LENGTH = 4000;
     private static final int SLOW_DOWN_PARTS_AFTER = 20;
     private static final int BODY_BUFFER_SIZE = 1024 * 1024 * 10;
     private static final String LOG_PREFIX = "OKPRFL";
