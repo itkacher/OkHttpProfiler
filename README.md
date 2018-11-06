@@ -15,7 +15,7 @@ Just click the right mouse button on a root element of the tree (or any other), 
 
 For installation, you need to include the library to your app build.gradle file
 
-    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.2' 
+    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.3' 
 
 and add Interceptor to okHttpClient in code
 ##### For OkHttp
