@@ -1,6 +1,6 @@
 # OkHttpProfiler
 
-The OkHttp Profiler plugin can show request from the OkHttp library directly in the Android Studio tool window.
+The [OkHttp Profiler plugin](https://plugins.jetbrains.com/plugin/11249-okhttp-profiler "OkHttp Profiler") can show request from the OkHttp library directly in the Android Studio tool window.
 It supports okhttp v3 (http://square.github.io/okhttp/) or Retrofit v2 (https://square.github.io/retrofit/)
 
 You can **debug OkHttp request** or response headers, inspect the JSON as a tree, as a plain text etc. And you can easily **create a Java/Kotlin model from the data**. 
