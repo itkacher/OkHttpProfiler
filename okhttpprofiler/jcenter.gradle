@@ -2,7 +2,7 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-version '1.0.3'
+version '1.0.4'
 
 publishing {
     publications {
