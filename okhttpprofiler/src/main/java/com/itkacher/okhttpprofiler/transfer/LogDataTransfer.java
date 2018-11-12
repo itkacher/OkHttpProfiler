@@ -12,6 +12,7 @@ import android.util.Log;
 import java.io.IOException;
 
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -24,10 +25,13 @@ public class LogDataTransfer implements DataTransfer {
     private static final int BODY_BUFFER_SIZE = 1024 * 1024 * 10;
     private static final String LOG_PREFIX = "OKPRFL";
     private static final String DELIMITER = "_";
-    private static final String HEADER_DELIMITER = ":";
+    private static final Character HEADER_DELIMITER = ':';
+    private static final Character SPACE = ' ';
     private static final String KEY_TAG = "TAG";
     private static final String KEY_VALUE = "VALUE";
     private static final String KEY_PARTS_COUNT = "PARTS_COUNT";
+    private static final String CONTENT_TYPE = "Content-Type";
+    private static final String CONTENT_LENGTH = "Content-Length";
     private final Handler mHandler;
 
     public LogDataTransfer() {
@@ -37,39 +41,46 @@ public class LogDataTransfer implements DataTransfer {
     }
 
     @Override
-    public void sendRequest(String id, Request request) {
+    public void sendRequest(String id, Request request) throws IOException {
         fastLog(id, MessageType.REQUEST_METHOD, request.method());
         String url = request.url().toString();
         fastLog(id, MessageType.REQUEST_URL, url);
         fastLog(id, MessageType.REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
-        Headers headers = request.headers();
-        if (headers != null) {
-            int headersSize = headers.size();
-            for (String name : headers.names()) {
-                logWithHandler(id, MessageType.REQUEST_HEADER, name + ":" + headers.get(name), headersSize);
+
+        final Request copy = request.newBuilder().build();
+        final Buffer buffer = new Buffer();
+        RequestBody body = copy.body();
+
+        if (body != null) {
+            MediaType type = body.contentType();
+            if (type != null) {
+                fastLog(id, MessageType.REQUEST_HEADER, CONTENT_TYPE + HEADER_DELIMITER + SPACE + type.toString());
+            }
+            long contentLength = body.contentLength();
+            if (contentLength != -1) {
+                fastLog(id, MessageType.REQUEST_HEADER, CONTENT_LENGTH + HEADER_DELIMITER + SPACE + contentLength);
             }
         }
 
-        try {
-            final Request copy = request.newBuilder().build();
-            final Buffer buffer = new Buffer();
-            RequestBody body = copy.body();
-            if (body != null) {
-                body.writeTo(buffer);
-                largeLog(id, MessageType.REQUEST_BODY, buffer.readUtf8());
+        Headers headers = request.headers();
+        if (headers != null) {
+            for (String name : headers.names()) {
+                //We have logged them before
+                if (CONTENT_TYPE.equalsIgnoreCase(name) || CONTENT_LENGTH.equalsIgnoreCase(name)) continue;
+                fastLog(id, MessageType.REQUEST_HEADER, name + HEADER_DELIMITER + SPACE + headers.get(name));
             }
-        } catch (final IOException ignored) {
+        }
+
+        if (body != null) {
+            body.writeTo(buffer);
+            largeLog(id, MessageType.REQUEST_BODY, buffer.readUtf8());
         }
     }
 
     @Override
-    public void sendResponse(String id, Response response) {
-        try {
-            ResponseBody responseBodyCopy = response.peekBody(BODY_BUFFER_SIZE);
-            largeLog(id, MessageType.RESPONSE_BODY, responseBodyCopy.string());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void sendResponse(String id, Response response) throws IOException {
+        ResponseBody responseBodyCopy = response.peekBody(BODY_BUFFER_SIZE);
+        largeLog(id, MessageType.RESPONSE_BODY, responseBodyCopy.string());
 
         Headers headers = response.headers();
         logWithHandler(id, MessageType.RESPONSE_STATUS, String.valueOf(response.code()), 0);
@@ -94,7 +105,7 @@ public class LogDataTransfer implements DataTransfer {
     @SuppressLint("LogNotTimber")
     private void fastLog(String id, MessageType type, String message) {
         String tag = LOG_PREFIX + DELIMITER + id + DELIMITER + type.name;
-        if(message != null) {
+        if (message != null) {
             Log.v(tag, message);
         }
     }
@@ -137,9 +148,9 @@ public class LogDataTransfer implements DataTransfer {
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
-            if(bundle != null) {
+            if (bundle != null) {
                 int partsCount = bundle.getInt(KEY_PARTS_COUNT, 0);
-                if(partsCount > SLOW_DOWN_PARTS_AFTER) {
+                if (partsCount > SLOW_DOWN_PARTS_AFTER) {
                     try {
                         Thread.sleep(5L);
                     } catch (InterruptedException e) {
@@ -148,7 +159,7 @@ public class LogDataTransfer implements DataTransfer {
                 }
                 String data = bundle.getString(KEY_VALUE);
                 String key = bundle.getString(KEY_TAG);
-                if(data != null && key != null) {
+                if (data != null && key != null) {
                     Log.v(key, data);
                 }
             }
