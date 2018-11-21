@@ -10,6 +10,7 @@ import android.os.Process;
 import android.util.Log;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -73,7 +74,7 @@ public class LogDataTransfer implements DataTransfer {
 
         if (body != null) {
             body.writeTo(buffer);
-            largeLog(id, MessageType.REQUEST_BODY, buffer.readUtf8());
+            largeLog(id, MessageType.REQUEST_BODY, buffer.readString(Charset.defaultCharset()));
         }
     }
 
