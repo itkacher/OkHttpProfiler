@@ -1,17 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
-
-
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 5
-        versionName "1.0.5"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        targetSdkVersion 29
+        versionCode 7
+        versionName "1.0.7"
     }
 
     buildTypes {
@@ -29,32 +25,7 @@ android {
 }
 
 dependencies {
-    api 'com.squareup.okhttp3:okhttp:3.10.0'
-    testImplementation 'junit:junit:4.12'
-}
-repositories {
-    mavenCentral()
-}
-
-ext {
-    repoName = 'okhttpprofiler'
-    artifactId = 'com.itkacher.okhttpprofiler'
-    publisher = 'itkacher'
-
-    libraryDescription = 'This library is using for Android Studio plugin Okhttp Profiler'
-
-    siteUrl = 'https://github.com/itkacher/OkHttpProfiler'
-    gitUrl = 'https://github.com/itkacher/OkHttpProfiler.git'
-
-    libraryVersion = '1.0.5'
-
-    developerId = 'itkacher'
-    developerName = 'Ievgenii Tkachenko'
-    developerEmail = 'itkacher@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+    api 'com.squareup.okhttp3:okhttp:4.2.1'
 }
 
 apply from: 'jcenter.gradle'
