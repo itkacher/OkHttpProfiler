@@ -1,5 +1,9 @@
 # OkHttpProfiler
 
+
+### Created by [LocaleBro.com](https://localebro.com/?utm_source=github&utm_campaign=okprofiler&utm_media=link "LocaleBro.com") - Android Localization Platform
+
+
 The [OkHttp Profiler plugin](https://plugins.jetbrains.com/plugin/11249-okhttp-profiler "OkHttp Profiler") can show requests from the OkHttp library directly in the Android Studio tool window.
 It supports the OkHttp v3 (http://square.github.io/okhttp/) and the Retrofit v2 (https://square.github.io/retrofit/)
 
@@ -15,7 +19,7 @@ Just click the right mouse button on a root element of the tree (or any other), 
 
 For installation, you need to include the library to your app build.gradle file
 
-    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.4' 
+    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.5' 
 
 and add Interceptor to okHttpClient in code
 ##### For OkHttp
