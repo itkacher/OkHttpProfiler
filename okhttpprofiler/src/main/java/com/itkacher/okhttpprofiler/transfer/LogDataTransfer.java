@@ -64,12 +64,12 @@ public class LogDataTransfer implements DataTransfer {
         }
 
         Headers headers = request.headers();
-        if (headers != null) {
-            for (String name : headers.names()) {
-                //We have logged them before
-                if (CONTENT_TYPE.equalsIgnoreCase(name) || CONTENT_LENGTH.equalsIgnoreCase(name)) continue;
-                fastLog(id, MessageType.REQUEST_HEADER, name + HEADER_DELIMITER + SPACE + headers.get(name));
+        for (String name : headers.names()) {
+            //We have logged them before
+            if (CONTENT_TYPE.equalsIgnoreCase(name) || CONTENT_LENGTH.equalsIgnoreCase(name)) {
+                continue;
             }
+            fastLog(id, MessageType.REQUEST_HEADER, name + HEADER_DELIMITER + SPACE + headers.get(name));
         }
 
         if (body != null) {
@@ -85,10 +85,8 @@ public class LogDataTransfer implements DataTransfer {
 
         Headers headers = response.headers();
         logWithHandler(id, MessageType.RESPONSE_STATUS, String.valueOf(response.code()), 0);
-        if (headers != null) {
-            for (String name : headers.names()) {
-                logWithHandler(id, MessageType.RESPONSE_HEADER, name + HEADER_DELIMITER + headers.get(name), 0);
-            }
+        for (String name : headers.names()) {
+            logWithHandler(id, MessageType.RESPONSE_HEADER, name + HEADER_DELIMITER + headers.get(name), 0);
         }
     }
 
@@ -140,12 +138,11 @@ public class LogDataTransfer implements DataTransfer {
     }
 
 
-    private class LogBodyHandler extends Handler {
+    private static class LogBodyHandler extends Handler {
         private LogBodyHandler(Looper looper) {
             super(looper);
         }
 
-        @SuppressLint("LogNotTimber")
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle = msg.getData();
