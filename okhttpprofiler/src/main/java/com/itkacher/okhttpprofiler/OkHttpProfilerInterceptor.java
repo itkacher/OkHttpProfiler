@@ -1,5 +1,7 @@
 package com.itkacher.okhttpprofiler;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,6 +11,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.itkacher.okhttpprofiler.transfer.LogDataTransfer;
 import com.itkacher.okhttpprofiler.transfer.DataTransfer;
+
+import org.jetbrains.annotations.NotNull;
 
 import okhttp3.*;
 
@@ -22,6 +26,7 @@ public class OkHttpProfilerInterceptor implements Interceptor {
     private final DateFormat format = new SimpleDateFormat("ddhhmmssSSS", Locale.US);
     private final AtomicLong previousTime = new AtomicLong();
 
+    @NotNull
     @Override
     public Response intercept(Chain chain) throws IOException {
         String id = generateId();
