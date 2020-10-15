@@ -1,5 +1,11 @@
 # OkHttpProfiler
 
+### Issue with the Android Studio version 4.1:
+
+Unfortunately, Google changed realisation of one class but Intellij doesn't. Currently the fix of the plugin is on JetBrains review, but I am not sure that it will be completed successful.
+If you want to use the plugin with a new version of Android Studio, as a temporary solution, install it directly, please.
+The ZIP file with a plugin you can find here:
+[IntellijIDEA](https://plugins.jetbrains.com/plugin/11249-okhttp-profiler/versions/stable/99716)
 
 ### Created by [LocaleBro.com](https://localebro.com/?utm_source=github&utm_campaign=okprofiler&utm_media=link "LocaleBro.com") - Android Localization Platform
 
