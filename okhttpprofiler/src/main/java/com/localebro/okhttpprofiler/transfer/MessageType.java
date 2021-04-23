@@ -1,4 +1,4 @@
-package com.itkacher.okhttpprofiler.transfer;
+package com.localebro.okhttpprofiler.transfer;
 
 public enum MessageType {
     REQUEST_URL("RQU"),

@@ -1,0 +1,15 @@
+def properties = new Properties()
+properties.load(new FileInputStream("${rootDir}/okhttpprofiler/local.properties"))
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            stagingProfileId = properties.sonatypeStagingProfileId
+            username = properties.ossrhUsername
+            password = properties.ossrhPassword
+
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+        }
+    }
+}

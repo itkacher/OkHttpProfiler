@@ -1,6 +1,4 @@
-package com.itkacher.okhttpprofiler;
-
-import android.util.Log;
+package com.localebro.okhttpprofiler;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -9,8 +7,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.itkacher.okhttpprofiler.transfer.LogDataTransfer;
-import com.itkacher.okhttpprofiler.transfer.DataTransfer;
+import com.localebro.okhttpprofiler.transfer.LogDataTransfer;
+import com.localebro.okhttpprofiler.transfer.DataTransfer;
 
 import org.jetbrains.annotations.NotNull;
 

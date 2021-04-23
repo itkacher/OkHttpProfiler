@@ -1,10 +1,10 @@
-package com.itkacher.okprofilerexample;
+package com.localebro.okprofilerexample;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor;
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor;
 
 import java.io.IOException;
 
@@ -29,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
         }
         mClient = builder.build();
         sendRequest();
-        findViewById(R.id.send_request).setOnClickListener(v -> {
-            sendRequest();
-        });
+        findViewById(R.id.send_request).setOnClickListener(v -> sendRequest());
     }
 
     private void sendRequest() {

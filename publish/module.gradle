@@ -1,0 +1,106 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply plugin: 'org.jetbrains.dokka'
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    if (project.plugins.findPlugin("com.android.library")) {
+        from android.sourceSets.main.java.srcDirs
+    } else {
+        from sourceSets.main.java.srcDirs
+    }
+}
+
+tasks.withType(dokkaHtmlPartial.getClass()).configureEach {
+    pluginsMapConfiguration.set(
+            ["org.jetbrains.dokka.base.DokkaBase": """{ "separateInheritedMembers": true}"""]
+    )
+}
+
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    archiveClassifier.set('javadoc')
+    from dokkaJavadoc.outputDirectory
+}
+
+artifacts {
+    archives androidSourcesJar
+    archives javadocJar
+}
+
+ext {
+    pluginName = 'OkHttp Profiler'
+    repoName = 'okhttpprofiler'
+    packageName = 'com.localebro'
+    publisher = 'gektor650'
+    websiteUrl = 'https://localebro.com/'
+    libraryDescription = 'This library is using for Android Studio plugin Okhttp Profiler'
+
+    siteUrl = 'https://github.com/itkacher/OkHttpProfiler'
+    gitUrl = 'https://github.com/itkacher/OkHttpProfiler.git'
+
+    developerId = 'localebro'
+    developerName = 'Ievgenii Tkachenko'
+    developerEmail = 'admin@localebro.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+def properties = new Properties()
+properties.load(new FileInputStream("${rootDir}/okhttpprofiler/local.properties"))
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+
+                groupId = packageName
+                artifactId = repoName
+                version = android.defaultConfig.versionName
+
+                if (project.plugins.findPlugin("com.android.library")) {
+                    from components.release
+                } else {
+                    artifact("$buildDir/libs/${project.getName()}-${version}.jar")
+                }
+
+                artifact androidSourcesJar
+                artifact javadocJar
+
+                pom {
+                    name = repoName
+                    description = libraryDescription
+                    url = siteUrl
+                    licenses {
+                        license {
+                            name = licenseName
+                            url = licenseUrl
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'gektor650'
+                            name = 'Ievgenii Tkachenko'
+                            email = 'gektor650@gmail.com'
+                        }
+                        developer {
+                            id = 'localebro'
+                            name = 'LocaleBro'
+                            email = 'admin@localebro.com'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:github.com/itkacher/OkHttpProfiler.git'
+                        developerConnection = 'scm:git:ssh://github.com/itkacher/OkHttpProfiler.git'
+                        url = siteUrl
+                    }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications
+}
