@@ -13,6 +13,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     //    private static final String JSON_URL = "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/large_random_json.json";
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //OkHttp Initialization
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(new OkHttpProfilerInterceptor());
@@ -30,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
         mClient = builder.build();
         sendRequest();
         findViewById(R.id.send_request).setOnClickListener(v -> sendRequest());
+
+        //Retrofit Initialization (if needed)
+        Retrofit retrofit = new Retrofit.Builder()
+            .client(mClient)
+                .build();
     }
 
     private void sendRequest() {
