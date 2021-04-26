@@ -2,6 +2,8 @@
 
 ### Created by [LocaleBro.com](https://localebro.com/?utm_source=github&utm_campaign=okprofiler&utm_media=link "LocaleBro.com") - Android Localization Platform
 
+### Support Developer [Ievgenii Tkachenko](https://www.buymeacoffee.com/gektor650 "Ievgenii Tkachenko")
+
 ## Important! Package migration!
 
 JFrog Bintray is shutting down, so the OkHttpProfiler plugin was migrated to Maven Central.
