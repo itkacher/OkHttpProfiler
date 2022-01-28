@@ -33,12 +33,16 @@ public class LogDataTransfer implements DataTransfer {
     private static final String KEY_PARTS_COUNT = "PARTS_COUNT";
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String CONTENT_LENGTH = "Content-Length";
-    private final Handler mHandler;
+    private Handler mHandler;
 
     public LogDataTransfer() {
-        final HandlerThread handlerThread = new HandlerThread("OkHttpProfiler", Process.THREAD_PRIORITY_BACKGROUND);
+        final HandlerThread handlerThread = new HandlerThread("OkHttpProfiler", Process.THREAD_PRIORITY_BACKGROUND) {
+            @Override
+            protected void onLooperPrepared() {
+                mHandler = new LogBodyHandler(handlerThread.getLooper());
+            }
+        };
         handlerThread.start();
-        mHandler = new LogBodyHandler(handlerThread.getLooper());
     }
 
     @Override
@@ -110,6 +114,7 @@ public class LogDataTransfer implements DataTransfer {
     }
 
     private void logWithHandler(String id, MessageType type, String message, int partsCount) {
+        if (mHandler == null) return;
         Message handlerMessage = mHandler.obtainMessage();
         String tag = LOG_PREFIX + DELIMITER + id + DELIMITER + type.name;
         Bundle bundle = new Bundle();
