@@ -1,6 +1,7 @@
 package com.localebro.okprofilerexample;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +18,7 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     //    private static final String JSON_URL = "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/large_random_json.json";
+    private static final String BASE_URL = "https://raw.githubusercontent.com";
     private static final String JSON_URL = "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/colors.json";
     private OkHttpClient mClient;
 
@@ -36,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Retrofit Initialization (if needed)
         Retrofit retrofit = new Retrofit.Builder()
-            .client(mClient)
+                .client(mClient)
+                .baseUrl(BASE_URL)
                 .build();
     }
 
