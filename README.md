@@ -9,7 +9,7 @@
 JFrog Bintray is shutting down, so the OkHttpProfiler plugin was migrated to Maven Central.
 To migrate your plugin just change old package (com.itkacher) to the:
 
-    implementation("com.localebro:okhttpprofiler:1.0.8")
+    implementation 'com.localebro:okhttpprofiler:1.0.8'
 
 and change
     

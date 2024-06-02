@@ -1,15 +1,13 @@
 apply plugin: 'com.android.library'
 
-apply from: "${rootDir}/publish/module.gradle"
+//apply from: "${rootDir}/publish/module.gradle"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 29
-        versionCode 8
-        versionName "1.0.8"
+        targetSdkVersion 33
     }
 
     buildTypes {
@@ -23,6 +21,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'com.itkacher.okprofiler'
 
 }
 
