@@ -1,171 +1,182 @@
-package com.localebro.okhttpprofiler.transfer;
+package com.localebro.okhttpprofiler.transfer
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
-import android.os.Process;
-import android.util.Log;
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
+import android.os.Message
+import android.os.Process
+import android.util.Log
+import okhttp3.Request
+import okhttp3.Response
+import okio.Buffer
+import java.io.IOException
+import java.nio.charset.Charset
 
-import java.io.IOException;
-import java.nio.charset.Charset;
+class LogDataTransfer : DataTransfer {
+    private lateinit var mHandler: Handler
 
-import okhttp3.Headers;
-import okhttp3.MediaType;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okio.Buffer;
-
-public class LogDataTransfer implements DataTransfer {
-    private static final int LOG_LENGTH = 4000;
-    private static final int SLOW_DOWN_PARTS_AFTER = 20;
-    private static final int BODY_BUFFER_SIZE = 1024 * 1024 * 10;
-    private static final String LOG_PREFIX = "OKPRFL";
-    private static final String DELIMITER = "_";
-    private static final Character HEADER_DELIMITER = ':';
-    private static final Character SPACE = ' ';
-    private static final String KEY_TAG = "TAG";
-    private static final String KEY_VALUE = "VALUE";
-    private static final String KEY_PARTS_COUNT = "PARTS_COUNT";
-    private static final String CONTENT_TYPE = "Content-Type";
-    private static final String CONTENT_LENGTH = "Content-Length";
-    private Handler mHandler;
-
-    public LogDataTransfer() {
-        final HandlerThread handlerThread = new HandlerThread("OkHttpProfiler", Process.THREAD_PRIORITY_BACKGROUND) {
-            @Override
-            protected void onLooperPrepared() {
-                mHandler = new LogBodyHandler(handlerThread.getLooper());
+    init {
+        val handlerThread: HandlerThread =
+            object : HandlerThread("OkHttpProfiler", Process.THREAD_PRIORITY_BACKGROUND) {
+                override fun onLooperPrepared() {
+                    mHandler = LogBodyHandler(this.looper)
+                }
             }
-        };
-        handlerThread.start();
+        handlerThread.start()
     }
 
-    @Override
-    public void sendRequest(String id, Request request) throws IOException {
-        fastLog(id, MessageType.REQUEST_METHOD, request.method());
-        String url = request.url().toString();
-        fastLog(id, MessageType.REQUEST_URL, url);
-        fastLog(id, MessageType.REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
+    @Throws(IOException::class)
+    override fun sendRequest(id: String, request: Request) {
+        fastLog(id, MessageType.REQUEST_METHOD, request.method)
+        fastLog(id, MessageType.REQUEST_URL, request.url.toString())
+        fastLog(id, MessageType.REQUEST_TIME, System.currentTimeMillis().toString())
 
-        final Request copy = request.newBuilder().build();
-        final Buffer buffer = new Buffer();
-        RequestBody body = copy.body();
+        val buffer = Buffer()
+        val body = request.newBuilder().build().body
 
-        if (body != null) {
-            MediaType type = body.contentType();
-            if (type != null) {
-                fastLog(id, MessageType.REQUEST_HEADER, CONTENT_TYPE + HEADER_DELIMITER + SPACE + type.toString());
+        body?.let {
+            body.contentType()?.let { type ->
+                fastLog(
+                    id = id,
+                    type = MessageType.REQUEST_HEADER,
+                    message = CONTENT_TYPE + HEADER_DELIMITER + SPACE + type.toString()
+                )
             }
-            long contentLength = body.contentLength();
-            if (contentLength != -1) {
-                fastLog(id, MessageType.REQUEST_HEADER, CONTENT_LENGTH + HEADER_DELIMITER + SPACE + contentLength);
+            val contentLength = body.contentLength()
+            if (contentLength != -1L) {
+                fastLog(
+                    id = id,
+                    type = MessageType.REQUEST_HEADER,
+                    message = CONTENT_LENGTH + HEADER_DELIMITER + SPACE + contentLength
+                )
             }
         }
 
-        Headers headers = request.headers();
-        for (String name : headers.names()) {
+        val headers = request.headers
+        for (name in headers.names()) {
             //We have logged them before
-            if (CONTENT_TYPE.equalsIgnoreCase(name) || CONTENT_LENGTH.equalsIgnoreCase(name)) {
-                continue;
+            if (CONTENT_TYPE.equals(name, ignoreCase = true)
+                || CONTENT_LENGTH.equals(name, ignoreCase = true)
+            ) {
+                continue
             }
-            fastLog(id, MessageType.REQUEST_HEADER, name + HEADER_DELIMITER + SPACE + headers.get(name));
+            fastLog(
+                id = id,
+                type = MessageType.REQUEST_HEADER,
+                message = name + HEADER_DELIMITER + SPACE + headers[name]
+            )
         }
 
-        if (body != null) {
-            body.writeTo(buffer);
-            largeLog(id, MessageType.REQUEST_BODY, buffer.readString(Charset.defaultCharset()));
-        }
-    }
-
-    @Override
-    public void sendResponse(String id, Response response) throws IOException {
-        ResponseBody responseBodyCopy = response.peekBody(BODY_BUFFER_SIZE);
-        largeLog(id, MessageType.RESPONSE_BODY, responseBodyCopy.string());
-
-        Headers headers = response.headers();
-        logWithHandler(id, MessageType.RESPONSE_STATUS, String.valueOf(response.code()), 0);
-        for (String name : headers.names()) {
-            logWithHandler(id, MessageType.RESPONSE_HEADER, name + HEADER_DELIMITER + headers.get(name), 0);
+        body?.let {
+            body.writeTo(buffer)
+            largeLog(id, MessageType.REQUEST_BODY, buffer.readString(Charset.defaultCharset()))
         }
     }
 
-    @Override
-    public void sendException(String id, Exception response) {
-        logWithHandler(id, MessageType.RESPONSE_ERROR, response.getLocalizedMessage(), 0);
+    @Throws(IOException::class)
+    override fun sendResponse(id: String, response: Response) {
+        val responseBodyCopy = response.peekBody(BODY_BUFFER_SIZE.toLong())
+        largeLog(id, MessageType.RESPONSE_BODY, responseBodyCopy.string())
+
+        val headers = response.headers
+        logWithHandler(id, MessageType.RESPONSE_STATUS, response.code.toString(), 0)
+        for (name in headers.names()) {
+            logWithHandler(
+                id,
+                MessageType.RESPONSE_HEADER,
+                name + HEADER_DELIMITER + headers[name],
+                0
+            )
+        }
     }
 
-    @Override
-    public void sendDuration(String id, long duration) {
-        logWithHandler(id, MessageType.RESPONSE_TIME, String.valueOf(duration), 0);
-        logWithHandler(id, MessageType.RESPONSE_END, "-->", 0);
+    override fun sendException(id: String, response: Exception) {
+        logWithHandler(
+            id,
+            MessageType.RESPONSE_ERROR,
+            response.localizedMessage ?: "Unknown exception",
+            0
+        )
+    }
+
+    override fun sendDuration(id: String, duration: Long) {
+        logWithHandler(id, MessageType.RESPONSE_TIME, duration.toString(), 0)
+        logWithHandler(id, MessageType.RESPONSE_END, "-->", 0)
     }
 
     @SuppressLint("LogNotTimber")
-    private void fastLog(String id, MessageType type, String message) {
-        String tag = LOG_PREFIX + DELIMITER + id + DELIMITER + type.name;
-        if (message != null) {
-            Log.v(tag, message);
+    private fun fastLog(id: String, type: MessageType, message: String?) {
+        message?.let {
+            val tag = LOG_PREFIX + DELIMITER + id + DELIMITER + type.text
+            Log.v(tag, it)
         }
     }
 
-    private void logWithHandler(String id, MessageType type, String message, int partsCount) {
-        if (mHandler == null) return;
-        Message handlerMessage = mHandler.obtainMessage();
-        String tag = LOG_PREFIX + DELIMITER + id + DELIMITER + type.name;
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_TAG, tag);
-        bundle.putString(KEY_VALUE, message);
-        bundle.putInt(KEY_PARTS_COUNT, partsCount);
-        handlerMessage.setData(bundle);
-        mHandler.sendMessage(handlerMessage);
+    private fun logWithHandler(id: String?, type: MessageType, message: String, partsCount: Int) {
+        if (!this::mHandler.isInitialized) return
+        val handlerMessage = mHandler.obtainMessage()
+        val tag = LOG_PREFIX + DELIMITER + id + DELIMITER + type.text
+        val bundle = Bundle().apply {
+            putString(KEY_TAG, tag)
+            putString(KEY_VALUE, message)
+            putInt(KEY_PARTS_COUNT, partsCount)
+        }
+        handlerMessage.data = bundle
+        mHandler.sendMessage(handlerMessage)
     }
 
-    private void largeLog(String id, MessageType type, String content) {
-        final int contentLength = content.length();
-        if (content.length() > LOG_LENGTH) {
-            final int parts = contentLength / LOG_LENGTH;
-            for (int i = 0; i <= parts; i++) {
-                final int start = i * LOG_LENGTH;
-                int end = start + LOG_LENGTH;
+    private fun largeLog(id: String?, type: MessageType, content: String) {
+        val contentLength = content.length
+        if (contentLength > LOG_LENGTH) {
+            val parts = contentLength / LOG_LENGTH
+            for (i in 0..parts) {
+                val start = i * LOG_LENGTH
+                var end = start + LOG_LENGTH
                 if (end > contentLength) {
-                    end = contentLength;
+                    end = contentLength
                 }
-                logWithHandler(id, type, content.substring(start, end), parts);
+                logWithHandler(id, type, content.substring(start, end), parts)
             }
         } else {
-            logWithHandler(id, type, content, 0);
+            logWithHandler(id, type, content, 0)
         }
     }
 
 
-    private static class LogBodyHandler extends Handler {
-        private LogBodyHandler(Looper looper) {
-            super(looper);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            Bundle bundle = msg.getData();
-            if (bundle != null) {
-                int partsCount = bundle.getInt(KEY_PARTS_COUNT, 0);
+    private class LogBodyHandler(looper: Looper) : Handler(looper) {
+        override fun handleMessage(msg: Message) {
+            msg.data?.let { bundle ->
+                val partsCount = bundle.getInt(KEY_PARTS_COUNT, 0)
                 if (partsCount > SLOW_DOWN_PARTS_AFTER) {
                     try {
-                        Thread.sleep(5L);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Thread.sleep(5L)
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
                     }
                 }
-                String data = bundle.getString(KEY_VALUE);
-                String key = bundle.getString(KEY_TAG);
+                val data = bundle.getString(KEY_VALUE)
+                val key = bundle.getString(KEY_TAG)
                 if (data != null && key != null) {
-                    Log.v(key, data);
+                    Log.v(key, data)
                 }
             }
         }
+    }
+
+    companion object {
+        private const val LOG_LENGTH = 4000
+        private const val SLOW_DOWN_PARTS_AFTER = 20
+        private const val BODY_BUFFER_SIZE = 1024 * 1024 * 10
+        private const val LOG_PREFIX = "OKPRFL"
+        private const val DELIMITER = "_"
+        private const val HEADER_DELIMITER = ':'
+        private const val SPACE = ' '
+        private const val KEY_TAG = "TAG"
+        private const val KEY_VALUE = "VALUE"
+        private const val KEY_PARTS_COUNT = "PARTS_COUNT"
+        private const val CONTENT_TYPE = "Content-Type"
+        private const val CONTENT_LENGTH = "Content-Length"
     }
 }

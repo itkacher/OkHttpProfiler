@@ -1,44 +1,41 @@
-package com.localebro.okhttpprofiler;
+package com.localebro.okhttpprofiler
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.concurrent.atomic.AtomicLong;
-
-import com.localebro.okhttpprofiler.transfer.LogDataTransfer;
-import com.localebro.okhttpprofiler.transfer.DataTransfer;
-
-import org.jetbrains.annotations.NotNull;
-
-import okhttp3.*;
+import com.localebro.okhttpprofiler.transfer.DataTransfer
+import com.localebro.okhttpprofiler.transfer.LogDataTransfer
+import com.localebro.okhttpprofiler.transfer.modifyResponse
+import okhttp3.Interceptor
+import okhttp3.Interceptor.Chain
+import okhttp3.Response
+import java.io.IOException
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * @author itkacher
  * @since 9/25/18
  */
-public class OkHttpProfilerInterceptor implements Interceptor {
+class OkHttpProfilerInterceptor : Interceptor {
+    private val dataTransfer: DataTransfer = LogDataTransfer()
+    private val format: DateFormat = SimpleDateFormat("ddhhmmssSSS", Locale.US)
+    private val previousTime = AtomicLong()
 
-    private final DataTransfer dataTransfer = new LogDataTransfer();
-    private final DateFormat format = new SimpleDateFormat("ddhhmmssSSS", Locale.US);
-    private final AtomicLong previousTime = new AtomicLong();
-
-    @NotNull
-    @Override
-    public Response intercept(Chain chain) throws IOException {
-        String id = generateId();
-        long startTime = System.currentTimeMillis();
-        dataTransfer.sendRequest(id, chain.request());
+    @Throws(IOException::class)
+    override fun intercept(chain: Chain): Response {
+        val id = generateId()
+        val startTime = System.currentTimeMillis()
+        dataTransfer.sendRequest(id, chain.request())
         try {
-            Response response = chain.proceed(chain.request());
-            dataTransfer.sendResponse(id, response);
-            dataTransfer.sendDuration(id, System.currentTimeMillis() - startTime);
-            return response;
-        } catch (Exception e) {
-            dataTransfer.sendException(id, e);
-            dataTransfer.sendDuration(id, System.currentTimeMillis() - startTime);
-            throw e;
+            val response = chain.proceed(chain.request()).modifyResponse()
+            dataTransfer.sendResponse(id, response)
+            dataTransfer.sendDuration(id, System.currentTimeMillis() - startTime)
+            return response
+        } catch (e: Exception) {
+            dataTransfer.sendException(id, e)
+            dataTransfer.sendDuration(id, System.currentTimeMillis() - startTime)
+            throw e
         }
     }
 
@@ -47,14 +44,15 @@ public class OkHttpProfilerInterceptor implements Interceptor {
      * Based on a current time.
      * @return string id
      */
-    private synchronized String generateId() {
-        long currentTime = Long.parseLong(format.format(new Date()));
+    @Synchronized
+    private fun generateId(): String {
+        var currentTime = format.format(Date()).toLong()
         //Increase time if it the same, as previous (unique id)
-        long previousTime = this.previousTime.get();
-        if(currentTime <= previousTime) {
-            currentTime = ++previousTime;
+        var previousTime = previousTime.get()
+        if (currentTime <= previousTime) {
+            currentTime = ++previousTime
         }
-        this.previousTime.set(currentTime);
-        return Long.toString(currentTime, Character.MAX_RADIX);
+        this.previousTime.set(currentTime)
+        return currentTime.toString(Character.MAX_RADIX.coerceIn(2, 36))
     }
 }

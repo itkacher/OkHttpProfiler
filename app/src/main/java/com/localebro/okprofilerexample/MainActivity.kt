@@ -1,70 +1,71 @@
-package com.localebro.okprofilerexample;
+package com.localebro.okprofilerexample
 
-import android.os.Bundle;
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
+import com.localebro.okhttpprofiler.settings.OkHttpProfilerSettingsActivity.Companion.getIntent
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import retrofit2.Retrofit
+import java.io.IOException
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+class MainActivity : AppCompatActivity() {
+    private lateinit var mClient: OkHttpClient
 
-import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import retrofit2.Retrofit;
-
-public class MainActivity extends AppCompatActivity {
-    //    private static final String JSON_URL = "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/large_random_json.json";
-    private static final String BASE_URL = "https://raw.githubusercontent.com";
-    private static final String JSON_URL = "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/colors.json";
-    private OkHttpClient mClient;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         //OkHttp Initialization
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        if (BuildConfig.DEBUG) {
-            builder.addInterceptor(new OkHttpProfilerInterceptor());
+        val builder = OkHttpClient.Builder().apply {
+            if (BuildConfig.DEBUG) {
+                addInterceptor(OkHttpProfilerInterceptor())
+            }
         }
-        mClient = builder.build();
-        sendRequest();
-        findViewById(R.id.send_request).setOnClickListener(v -> sendRequest());
+        mClient = builder.build()
+        sendRequest()
+        findViewById<View>(R.id.send_request).setOnClickListener { sendRequest() }
 
         //Retrofit Initialization (if needed)
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(mClient)
-                .baseUrl(BASE_URL)
-                .build();
+        val retrofit = Retrofit.Builder()
+            .client(mClient)
+            .baseUrl(BASE_URL)
+            .build()
     }
 
-    private void sendRequest() {
-        Request request = new Request.Builder()
-                .url(JSON_URL)
-                .get()
-                .build();
+    private fun sendRequest() {
+        val request: Request = Request.Builder()
+            .url(JSON_URL)
+            .get()
+            .build()
 
-        mClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+        mClient.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
             }
 
-            @SuppressWarnings("unused")
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) {
+            @Suppress("unused")
+            override fun onResponse(call: Call, response: Response) {
                 try {
-                    if (response.body() != null) {
-                        String unusedText = response.body().string();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    val unusedText = response.body?.toString()
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
             }
-        });
+        })
+    }
+
+    private fun openSettings() {
+        startActivity(getIntent(applicationContext))
+    }
+
+    companion object {
+        //    private static final String JSON_URL = "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/large_random_json.json";
+        private const val BASE_URL = "https://raw.githubusercontent.com"
+        private const val JSON_URL =
+            "https://raw.githubusercontent.com/itkacher/OkHttpProfiler/master/colors.json"
     }
 }

@@ -1,6 +1,6 @@
-package com.localebro.okhttpprofiler.transfer;
+package com.localebro.okhttpprofiler.transfer
 
-public enum MessageType {
+enum class MessageType(val text: String) {
     REQUEST_URL("RQU"),
     REQUEST_TIME("RQT"),
     REQUEST_METHOD("RQM"),
@@ -13,11 +13,5 @@ public enum MessageType {
     RESPONSE_BODY("RSB"),
     RESPONSE_END("RSD"),
     RESPONSE_ERROR("REE"),
-    UNKNOWN("UNKNOWN");
-
-    public final String name;
-
-    MessageType(String name) {
-        this.name = name;
-    }
+    UNKNOWN("UNKNOWN")
 }
