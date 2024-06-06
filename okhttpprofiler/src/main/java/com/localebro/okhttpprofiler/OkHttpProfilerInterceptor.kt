@@ -2,7 +2,6 @@ package com.localebro.okhttpprofiler
 
 import com.localebro.okhttpprofiler.transfer.DataTransfer
 import com.localebro.okhttpprofiler.transfer.LogDataTransfer
-import com.localebro.okhttpprofiler.transfer.modifyResponse
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
@@ -28,7 +27,7 @@ class OkHttpProfilerInterceptor : Interceptor {
         val startTime = System.currentTimeMillis()
         dataTransfer.sendRequest(id, chain.request())
         try {
-            val response = chain.proceed(chain.request()).modifyResponse()
+            val response = chain.proceed(chain.request())
             dataTransfer.sendResponse(id, response)
             dataTransfer.sendDuration(id, System.currentTimeMillis() - startTime)
             return response
