@@ -83,6 +83,18 @@ and add Interceptor to okHttpClient in code
             .client(client)
             .build()
 
+##### For Ktor
+###### Kotlin
+```
+    HttpClient(OkHttp) {
+        if (BuildConfig.DEBUG) {
+            engine {
+                addInterceptor(OkHttpProfilerInterceptor())
+            }
+        }
+    }
+```
+
 ##### For security reasons we recommend to enable OkHttpProfilerInterceptor only for DEBUG BUILDS! 
 Also Proguard will cut it out in the release build.
 
