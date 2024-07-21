@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
+import io.nerdythings.modifier.interceptor.OkHttpRequestModifierInterceptor
 import io.nerdythings.modifier.settings.OkHttpProfilerSettingsActivity
 import okhttp3.Call
 import okhttp3.Callback
@@ -23,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         //OkHttp Initialization
         val builder = OkHttpClient.Builder().apply {
             if (BuildConfig.DEBUG) {
-                addInterceptor(OkHttpProfilerInterceptor(this@MainActivity))
+                addInterceptor(OkHttpProfilerInterceptor())
+                addInterceptor(OkHttpRequestModifierInterceptor(applicationContext))
             }
         }
         mClient = builder.build()

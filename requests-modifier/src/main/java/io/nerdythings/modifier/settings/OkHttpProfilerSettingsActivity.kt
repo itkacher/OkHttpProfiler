@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -57,6 +60,7 @@ open class OkHttpProfilerSettingsActivity : AppCompatActivity() {
                 onSaveResponse = viewModel::saveCustomResponse,
                 onUpdateResponse = viewModel::updateCustomResponse,
                 onRemoveCustomResponse = viewModel::removeCustomResponse,
+                onClose = { this.finish() },
             )
         }
     }
@@ -79,18 +83,29 @@ private fun OkHttpProfilerSettings(
     onSaveResponse: (String, String, Int) -> Unit,
     onUpdateResponse: (CustomResponse) -> Unit,
     onRemoveCustomResponse: (String) -> Unit,
+    onClose: () -> Unit,
 ) {
     val openAddNewDialog = remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
-            Text(
-                text = stringResource(id = R.string.profiler_settings),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 24.sp,
-            )
+            Row(
+                modifier = Modifier.padding(20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .padding(end = 20.dp)
+                        .clickable { onClose() },
+                    painter = painterResource(id = R.drawable.ic_close),
+                    contentDescription = null,
+                )
+                Text(
+                    text = stringResource(id = R.string.profiler_settings),
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center,
+                    fontSize = 24.sp,
+                )
+            }
         },
         content = {
             ProfilerSettingsContent(
@@ -171,5 +186,6 @@ private fun OkHttpProfilerSettingsPreview() {
         onSaveResponse = { _, _, _ -> },
         onUpdateResponse = { _ -> },
         onRemoveCustomResponse = { _ -> },
+        onClose = {},
     )
 }

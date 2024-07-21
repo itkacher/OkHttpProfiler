@@ -1,7 +1,5 @@
 package com.localebro.okhttpprofiler
 
-import android.content.Context
-import io.nerdythings.modifier.data.DataModifier
 import com.localebro.okhttpprofiler.transfer.DataTransfer
 import com.localebro.okhttpprofiler.transfer.LogDataTransfer
 import okhttp3.Interceptor
@@ -18,11 +16,10 @@ import java.util.concurrent.atomic.AtomicLong
  * @author itkacher
  * @since 9/25/18
  */
-class OkHttpProfilerInterceptor(context: Context) : Interceptor {
+class OkHttpProfilerInterceptor : Interceptor {
     private val dataTransfer: DataTransfer = LogDataTransfer()
     private val format: DateFormat = SimpleDateFormat("ddhhmmssSSS", Locale.US)
     private val previousTime = AtomicLong()
-    private val dataModifier = DataModifier(context)
 
     @Throws(IOException::class)
     override fun intercept(chain: Chain): Response {
@@ -30,7 +27,7 @@ class OkHttpProfilerInterceptor(context: Context) : Interceptor {
         val startTime = System.currentTimeMillis()
         dataTransfer.sendRequest(id, chain.request())
         try {
-            val response = dataModifier.modifyResponse(chain.proceed(chain.request()))
+            val response = chain.proceed(chain.request())
             dataTransfer.sendResponse(id, response)
             dataTransfer.sendDuration(id, System.currentTimeMillis() - startTime)
             return response
