@@ -15,6 +15,9 @@ import java.util.UUID
 
 class DataModifier(private val context: Context) {
 
+    private val _customResponses = MutableStateFlow<List<Pair<String, CustomResponse>>>(emptyList())
+    internal val customResponses: StateFlow<List<Pair<String, CustomResponse>>> =
+        _customResponses.asStateFlow()
     private val gson = Gson()
 
     private val modifiersFile
@@ -68,10 +71,6 @@ class DataModifier(private val context: Context) {
                 gson.fromJson(it, CustomResponse::class.java)
             }
         }.toList()
-
-    private val _customResponses = MutableStateFlow<List<Pair<String, CustomResponse>>>(emptyList())
-    internal val customResponses: StateFlow<List<Pair<String, CustomResponse>>> =
-        _customResponses.asStateFlow()
 
     internal suspend fun fetchAllCustomResponses() = withContext(Dispatchers.IO) {
         val savedModifications = mutableListOf<Pair<String, CustomResponse>>()
