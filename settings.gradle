@@ -12,4 +12,4 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-include ':app', ':okhttpprofiler'
+include ':app', ':okhttpprofiler', ':requestsModifier'

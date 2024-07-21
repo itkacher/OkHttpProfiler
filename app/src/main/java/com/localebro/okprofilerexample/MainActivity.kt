@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
-import com.localebro.okhttpprofiler.settings.OkHttpProfilerSettingsActivity.Companion.getIntent
+import com.localebro.requestsModifier.settings.OkHttpProfilerSettingsActivity
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -23,12 +23,13 @@ class MainActivity : AppCompatActivity() {
         //OkHttp Initialization
         val builder = OkHttpClient.Builder().apply {
             if (BuildConfig.DEBUG) {
-                addInterceptor(OkHttpProfilerInterceptor())
+                addInterceptor(OkHttpProfilerInterceptor(this@MainActivity))
             }
         }
         mClient = builder.build()
         sendRequest()
         findViewById<View>(R.id.send_request).setOnClickListener { sendRequest() }
+        findViewById<View>(R.id.open_settings).setOnClickListener { openSettings() }
 
         //Retrofit Initialization (if needed)
         val retrofit = Retrofit.Builder()
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openSettings() {
-        startActivity(getIntent(applicationContext))
+        startActivity(OkHttpProfilerSettingsActivity.getIntent(applicationContext))
     }
 
     companion object {
