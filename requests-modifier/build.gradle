@@ -22,7 +22,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    namespace 'com.itkacher.requestsModifier'
+    namespace 'io.nerdythings.requests.modifier'
     buildFeatures {
         compose = true
     }

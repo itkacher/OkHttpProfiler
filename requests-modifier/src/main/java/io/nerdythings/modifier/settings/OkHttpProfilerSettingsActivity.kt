@@ -1,4 +1,4 @@
-package com.localebro.requestsModifier.settings
+package io.nerdythings.modifier.settings
 
 import android.content.Context
 import android.content.Intent
@@ -32,10 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.itkacher.requestsModifier.R
-import com.localebro.requestsModifier.dataModifier.CustomResponse
-import com.localebro.requestsModifier.ui.AddNewRequestItemDialog
-import com.localebro.requestsModifier.ui.RequestItem
+import io.nerdythings.modifier.data.CustomResponse
+import io.nerdythings.modifier.ui.AddNewRequestItemDialog
+import io.nerdythings.modifier.ui.RequestItem
+import io.nerdythings.requests.modifier.R
 
 open class OkHttpProfilerSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

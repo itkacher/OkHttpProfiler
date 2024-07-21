@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
-import com.localebro.requestsModifier.settings.OkHttpProfilerSettingsActivity
+import io.nerdythings.modifier.settings.OkHttpProfilerSettingsActivity
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient

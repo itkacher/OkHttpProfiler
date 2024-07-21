@@ -1,4 +1,4 @@
-package com.localebro.requestsModifier.dataModifier
+package io.nerdythings.modifier.data
 
 internal data class CustomResponse(
     val id: String,

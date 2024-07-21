@@ -1,12 +1,12 @@
-package com.localebro.requestsModifier.settings
+package io.nerdythings.modifier.settings
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.localebro.requestsModifier.dataModifier.CustomResponse
-import com.localebro.requestsModifier.dataModifier.DataModifier
+import io.nerdythings.modifier.data.CustomResponse
+import io.nerdythings.modifier.data.DataModifier
 import kotlinx.coroutines.launch
 
 internal class OkHttpProfilerSettingsViewModel(

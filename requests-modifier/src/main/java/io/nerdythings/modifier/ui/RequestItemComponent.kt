@@ -1,4 +1,4 @@
-package com.localebro.requestsModifier.ui
+package io.nerdythings.modifier.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,8 +21,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.itkacher.requestsModifier.R
-import com.localebro.requestsModifier.dataModifier.CustomResponse
+import io.nerdythings.modifier.data.CustomResponse
+import io.nerdythings.requests.modifier.R
 
 @Composable
 internal fun RequestItem(

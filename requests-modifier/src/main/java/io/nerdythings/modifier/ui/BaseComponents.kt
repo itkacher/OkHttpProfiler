@@ -1,4 +1,4 @@
-package com.localebro.requestsModifier.ui
+package io.nerdythings.modifier.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth

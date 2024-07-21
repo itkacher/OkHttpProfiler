@@ -1,4 +1,4 @@
-package com.localebro.requestsModifier.ui
+package io.nerdythings.modifier.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

@@ -4,7 +4,7 @@
 
     <application android:supportsRtl="true">
         <activity
-            android:name="com.localebro.requestsModifier.settings.OkHttpProfilerSettingsActivity"
+            android:name="io.nerdythings.modifier.settings.OkHttpProfilerSettingsActivity"
             android:label="OkHttpProfilerSettingsActivity"
             android:theme="@style/ProfilerSettingsTheme"/>
     </application>

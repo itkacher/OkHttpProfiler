@@ -1,4 +1,4 @@
-package com.localebro.requestsModifier.dataModifier
+package io.nerdythings.modifier.data
 
 import android.content.Context
 import com.google.gson.Gson

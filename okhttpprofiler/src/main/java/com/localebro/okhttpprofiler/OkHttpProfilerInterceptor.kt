@@ -1,7 +1,7 @@
 package com.localebro.okhttpprofiler
 
 import android.content.Context
-import com.localebro.requestsModifier.dataModifier.DataModifier
+import io.nerdythings.modifier.data.DataModifier
 import com.localebro.okhttpprofiler.transfer.DataTransfer
 import com.localebro.okhttpprofiler.transfer.LogDataTransfer
 import okhttp3.Interceptor

@@ -1,4 +1,4 @@
-package com.localebro.requestsModifier.ui
+package io.nerdythings.modifier.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.itkacher.requestsModifier.R
+import io.nerdythings.requests.modifier.R
 
 @Composable
 internal fun AddNewRequestItemDialog(
