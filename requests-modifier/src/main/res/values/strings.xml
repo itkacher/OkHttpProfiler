@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">requestsModifiers</string>
+    <string name="profiler_settings">Custom request modifiers</string>
+    <string name="new_request_field_title">Add new request modifier</string>
+    <string name="request_field_title">Request</string>
+    <string name="response_field_title">Response</string>
+    <string name="response_code_field_title">Response code</string>
+    <string name="request_hint">https://…</string>
+    <string name="response_hint">{\"name\":\"value\"}</string>
+    <string name="response_code_hint">200</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="dismiss">Dismiss</string>
+</resources>

@@ -5,11 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/send_request"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/send_request"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
+        <Button
+            android:id="@+id/send_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/send_request" />
+
+        <Button
+            android:id="@+id/open_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/profiler_settings" />
+    </LinearLayout>
 </FrameLayout>
