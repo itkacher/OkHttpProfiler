@@ -13,7 +13,9 @@ class OkHttpRequestModifierInterceptor(context: Context) : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Chain): Response {
         try {
-            return dataModifier.modifyResponse(chain.proceed(chain.request()))
+            return dataModifier.modifyResponse(chain.request()) {
+                chain.proceed(chain.request())
+            }
         } catch (e: Exception) {
             throw e
         }
