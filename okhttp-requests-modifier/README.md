@@ -3,8 +3,8 @@ customize HTTP responses.
 By adding this library into your project, you gain the ability to modify response bodies and
 response codes dynamically.
 
-| <img src="https://github.com/itkacher/OkHttpProfiler/blob/master/request_modifiers_activity.png?raw=true"> | <img src="https://github.com/itkacher/OkHttpProfiler/blob/master/request_modifiers_add_new_modifier.png?raw=true"> |
-|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/itkacher/OkHttpProfiler/blob/master/request_modifiers_activity.png?raw=true" width=250> | <img src="https://github.com/itkacher/OkHttpProfiler/blob/master/request_modifiers_add_new_modifier.png?raw=true" width=250> |
+|----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
 
 ## Installation
 
@@ -13,7 +13,7 @@ For installation, you need to include the library to your app build.gradle file
     releaseImplementation 'io.nerdythings:okhttp-requests-modifier-no-op:1.1.0'
     debugImplementation 'io.nerdythings:okhttp-requests-modifier:1.0.0'
 
-and add Interceptor to okHttpClient in code
+and add an Interceptor to the OkHttpClient in the code
 
 ##### For OkHttp
 
