@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
+import okhttp3.Protocol
+import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.File
@@ -142,12 +144,15 @@ class DataModifier(private val context: Context) {
         fetchAllCustomResponses()
     }
 
-    fun modifyResponse(response: Response): Response =
-        getCustomResponses(response.request.url.toString()).firstOrNull { it.isEnabled }
+    fun modifyResponse(request: Request, makeRequest: () -> Response) =
+        getCustomResponses(request.url.toString()).firstOrNull { it.isEnabled }
             ?.let { customResponse ->
-                response.newBuilder().apply {
-                    code(customResponse.code)
-                    body(customResponse.response.toResponseBody(response.body?.contentType()))
-                }.build()
-            } ?: response
+                Response.Builder()
+                    .request(request)
+                    .protocol(Protocol.HTTP_2)
+                    .message("success")
+                    .code(customResponse.code)
+                    .body(customResponse.response.toResponseBody())
+                    .build()
+            } ?: makeRequest()
 }
