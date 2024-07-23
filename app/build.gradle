@@ -60,5 +60,5 @@ dependencies {
 
 //    releaseImplementation ('io.nerdythings:okhttp-requests-modifier-no-op:1.0.0')
 //    debugImplementation ('io.nerdythings:okhttp-requests-modifier:1.0.0')
-//    implementation ('io.nerdythings:okhttp-profiler:1.1.0')
+//    implementation ('io.nerdythings:okhttp-profiler:1.1.1')
 }
