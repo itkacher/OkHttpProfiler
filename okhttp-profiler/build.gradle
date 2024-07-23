@@ -1,0 +1,39 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 34
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    namespace 'io.nerdythings.okhttp.profiler'
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.11.0'
+    compileOnly 'com.squareup.okhttp3:okhttp:4.12.0'
+}
+
+ext {
+    artifactId = "okhttp-profiler"
+    releaseVersion = "1.1.1"
+    libraryDescription = 'This library is using for Android Studio plugin Okhttp Profiler'
+}
+
+apply from: "${rootDir}/publish/publish.gradle"

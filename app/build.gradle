@@ -4,7 +4,7 @@ apply plugin: 'org.jetbrains.kotlin.android'
 android {
     compileSdkVersion 34
     defaultConfig {
-        applicationId "com.itkacher.okprofilerexample"
+        applicationId "io.nerdythings.okprofilerexample"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 1
@@ -50,11 +50,15 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     implementation 'com.google.code.gson:gson:2.11.0'
-    implementation project(path: ':okhttpprofiler')
-    releaseImplementation project(':requests-modifier-no-op')
-    debugImplementation project(':requests-modifier')
-    //    implementation ('com.localebro:okhttpprofiler:1.0.8')
+
+    implementation project(path: ':okhttp-profiler')
+    releaseImplementation project(':okhttp-requests-modifier-no-op')
+    debugImplementation project(':okhttp-requests-modifier')
+
+//    releaseImplementation ('io.nerdythings:requests-modifier-no-op:1.1.0')
+//    debugImplementation ('io.nerdythings:requests-modifier:1.1.0')
+//    implementation ('io.nerdythings:okhttpprofiler:1.1.0')
 }

@@ -1,0 +1,82 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply plugin: 'org.jetbrains.dokka'
+
+task androidJavadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    archiveClassifier.set('javadoc')
+    from dokkaJavadoc.outputDirectory
+}
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+    from android.sourceSets.main.kotlin.srcDirs
+}
+
+tasks.withType(dokkaHtmlPartial.getClass()).configureEach {
+    pluginsMapConfiguration.set(
+            ["org.jetbrains.dokka.base.DokkaBase": """{ "separateInheritedMembers": true}"""]
+    )
+}
+
+android {
+    publishing {
+        singleVariant("release") {
+            withJavadocJar()
+            withSourcesJar()
+        }
+    }
+}
+
+signing {
+    sign configurations.archives
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'io.nerdythings'
+                artifactId = artifactId
+                version = releaseVersion
+
+                from components.release
+
+                pom {
+                    name = artifactId
+                    description = libraryDescription
+                    url = "https://nerdythings.io/"
+                    licenses {
+                        license {
+                            name = 'The Apache Software License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'gektor650'
+                            name = 'Eugene Tkachenko'
+                            email = 'gektor650@gmail.com'
+                        }
+                        developer {
+                            id = 'sunhumann2010'
+                            name = 'Hanna Tkachenko'
+                            email = 'sunhumann2010@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:github.com/itkacher/OkHttpProfiler.git'
+                        developerConnection = 'scm:git:ssh://github.com/itkacher/OkHttpProfiler.git'
+                        url = "https://nerdythings.io/"
+                    }
+                }
+            }
+        }
+        //publish to filesystem repo
+        repositories{
+            maven {
+                url "$rootDir/releases/$artifactId"
+            }
+        }
+    }
+}

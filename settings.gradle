@@ -12,5 +12,4 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-include ':app', ':okhttpprofiler', ':requests-modifier'
-include ':requests-modifier-no-op'
+include ':app', ':okhttp-profiler', ':okhttp-requests-modifier', ':okhttp-requests-modifier-no-op'
