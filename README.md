@@ -1,23 +1,23 @@
 # OkHttpProfiler Android Library
 
-### Created by [LocaleBro.com](https://localebro.com/?utm_source=github&utm_campaign=okprofiler&utm_media=link "LocaleBro.com") - Android Localization Platform
+### Created by [NerdyThings Channel](https://www.youtube.com/@Nerdy.Things "YouTube.com")
 
-### Support Developer [Ievgenii Tkachenko](https://www.buymeacoffee.com/gektor650 "Ievgenii Tkachenko")
+### Developers Eugene Tkachenko && Hanna Tkachenko
 
 ## Important! Package migration!
 
 JFrog Bintray is shutting down, so the OkHttpProfiler plugin was migrated to Maven Central.
-To migrate your plugin just change old package (com.itkacher) to the:
+To migrate your plugin just change old package (io.nerdythings) to the:
 
-    implementation 'com.localebro:okhttpprofiler:1.0.8'
+    implementation 'io.nerdythings:okhttpprofiler:1.1.0'
 
 and change
     
-    import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor; 
+    import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor; 
 
 with the
 
-    import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor;
+    import io.nerdythings.okhttpprofiler.OkHttpProfilerInterceptor;
 
 in your code.
 
@@ -41,7 +41,7 @@ Just click the right mouse button on a root element of the tree (or any other), 
 
 For installation, you need to include the library to your app build.gradle file
 
-    implementation 'com.localebro:okhttpprofiler:1.0.8'
+    implementation 'io.nerdythings:okhttpprofiler:1.1.0'
 
 and add Interceptor to okHttpClient in code
 ##### For OkHttp
