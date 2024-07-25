@@ -54,11 +54,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     implementation 'com.google.code.gson:gson:2.11.0'
 
-    implementation project(path: ':okhttp-profiler')
-    releaseImplementation project(':okhttp-requests-modifier-no-op')
-    debugImplementation project(':okhttp-requests-modifier')
+//    implementation project(path: ':okhttp-profiler')
+//    releaseImplementation project(':okhttp-requests-modifier-no-op')
+//    debugImplementation project(':okhttp-requests-modifier')
 
-//    releaseImplementation ('io.nerdythings:okhttp-requests-modifier-no-op:1.0.0')
-//    debugImplementation ('io.nerdythings:okhttp-requests-modifier:1.0.0')
-//    implementation ('io.nerdythings:okhttp-profiler:1.1.1')
+    releaseImplementation ('io.nerdythings:okhttp-requests-modifier-no-op:1.0.0')
+    debugImplementation ('io.nerdythings:okhttp-requests-modifier:1.0.0')
+    implementation ('io.nerdythings:okhttp-profiler:1.1.1')
 }
