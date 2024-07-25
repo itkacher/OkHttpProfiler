@@ -1,6 +1,6 @@
 # OkHttpProfiler Android Library
 
-### Created by [NerdyThings Channel](https://www.youtube.com/@Nerdy.Things "YouTube.com")
+### Video Instructions on [NerdyThings Channel](https://youtu.be/KI_1-rUMjEI?si=EpXpMZncTNf53wxB&t=458 "YouTube.com")
 
 ### Developers Eugene Tkachenko && Hanna Tkachenko
 
