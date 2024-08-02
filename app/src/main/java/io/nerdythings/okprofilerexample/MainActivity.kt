@@ -2,7 +2,16 @@ package io.nerdythings.okprofilerexample
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.localebro.okprofilerexample.BuildConfig
 import com.localebro.okprofilerexample.R
 import io.nerdythings.okhttp.modifier.interceptor.OkHttpRequestModifierInterceptor
@@ -21,7 +30,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContent {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                Button(onClick = ::sendRequest) {
+                    Text(text = stringResource(id = R.string.send_request))
+                }
+                Button(onClick = ::openSettings) {
+                    Text(text = stringResource(id = R.string.open_modifier))
+                }
+            }
+        }
 
         //OkHttp Initialization
         val builder = OkHttpClient.Builder().apply {
@@ -32,9 +54,6 @@ class MainActivity : AppCompatActivity() {
         }
         mClient = builder.build()
         sendRequest()
-        findViewById<View>(R.id.send_request).setOnClickListener { sendRequest() }
-        findViewById<View>(R.id.open_settings).setOnClickListener { openSettings() }
-
         //Retrofit Initialization (if needed)
         val retrofit = Retrofit.Builder()
             .client(mClient)

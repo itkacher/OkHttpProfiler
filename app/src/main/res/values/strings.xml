@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">OkHttp_Profiler</string>
+    <string name="app_name">OkHttp Profiler Example</string>
     <string name="send_request">Send Request</string>
+    <string name="open_modifier">Open Request Modifier</string>
 </resources>
