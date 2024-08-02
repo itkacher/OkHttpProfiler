@@ -7,7 +7,7 @@
 
 ## OkHttp Profiler Android Library
 
-### Video Instructions On Youtube 
+### Video Instructions On [Youtube](https://youtu.be/KI_1-rUMjEI?si=EpXpMZncTNf53wxB&t=458 "YouTube.com")
 [![Video Instructions on](https://github.com/itkacher/OkHttpProfiler/blob/master/demo.png?raw=true)](https://youtu.be/KI_1-rUMjEI?si=EpXpMZncTNf53wxB&t=458 "YouTube.com")
 
 1. Install AndroidStudio Plugin plugin:
