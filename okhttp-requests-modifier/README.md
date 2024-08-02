@@ -10,30 +10,54 @@ response codes dynamically.
 
 For installation, you need to include the library to your app build.gradle file
 
-    releaseImplementation 'io.nerdythings:okhttp-requests-modifier-no-op:1.1.0'
-    debugImplementation 'io.nerdythings:okhttp-requests-modifier:1.0.0'
+```kotlin
+    releaseImplementation("io.nerdythings:okhttp-requests-modifier-no-op:1.0.0")
+    debugImplementation("'io.nerdythings:okhttp-requests-modifier:1.0.0")
+```
 
 and add an Interceptor to the OkHttpClient in the code
 
 ##### For OkHttp
 
+```kotlin
     val builder = OkHttpClient.Builder()
     if (BuildConfig.DEBUG) {
         builder.addInterceptor(OkHttpRequestModifierInterceptor(applicationContext))
     }    
     val client = builder.build()
+```
 
 ##### For Retrofit
 
+```kotlin
     val builder = OkHttpClient.Builder()
     if (BuildConfig.DEBUG) {
         builder.addInterceptor(OkHttpRequestModifierInterceptor(applicationContext))
     }    
     val client = builder.build()
     val retrofit = Retrofit.Builder()
-            ......
             .client(client)
             .build()
+```
+
+##### Call activity in your app
+
+Call `OkHttpProfilerSettingsActivity` from your code
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        findViewById<View>(R.id.open_settings).setOnClickListener { openSettings() }
+    }
+
+    private fun openSettings() {
+        startActivity(OkHttpProfilerSettingsActivity.getIntent(applicationContext))
+    }
+}
+```
 
 ##### For security reasons we recommend to enable OkHttpProfilerInterceptor only for DEBUG BUILDS!
 
@@ -58,6 +82,22 @@ To define custom responses, follow these steps:
    managing your requests.
 3. Through this Activity, you can easily add and modify your requests, specifying the desired
    response bodies and response codes.
+   Call `OkHttpProfilerSettingsActivity` from your code
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        findViewById<View>(R.id.open_settings).setOnClickListener { openSettings() }
+    }
+
+    private fun openSettings() {
+        startActivity(OkHttpProfilerSettingsActivity.getIntent(applicationContext))
+    }
+}
+```
 
 This intuitive UI makes it straightforward for developers to define and manage custom responses
 without diving deep into the code, enhancing productivity and debugging efficiency.

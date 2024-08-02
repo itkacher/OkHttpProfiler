@@ -1,111 +1,92 @@
-# OkHttpProfiler Android Library
+# OkHttp Profiler Android Library
 
-### Video Instructions on [NerdyThings Channel](https://youtu.be/KI_1-rUMjEI?si=EpXpMZncTNf53wxB&t=458 "YouTube.com")
+### OkHttp Profiler AndroidStudio Plugin
 
-### Developers Eugene Tkachenko && Hanna Tkachenko
+### Video Instructions On Youtube 
+[![Video Instructions on](https://github.com/itkacher/OkHttpProfiler/blob/master/demo.png?raw=true)](https://youtu.be/KI_1-rUMjEI?si=EpXpMZncTNf53wxB&t=458 "YouTube.com")
 
-## Important! Package migration!
+1. Install AndroidStudio Plugin plugin:
+[OkHttp Profiler plugin](https://plugins.jetbrains.com/plugin/11249-okhttp-profiler "OkHttp Profiler")
+2. Add library to app `build.gradle` file (module level):
+```kotlin
+implementation("io.nerdythings:okhttp-profiler:1.1.1")
+```
+3. Add interceptors to your OkHttp client:
 
-JFrog Bintray is shutting down, so the OkHttpProfiler plugin was migrated to Maven Central.
-To migrate your plugin just change old package (io.nerdythings) to the:
-
-    implementation 'io.nerdythings:okhttpprofiler:1.1.0'
-
-and change
-    
-    import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor; 
-
-with the
-
-    import io.nerdythings.okhttpprofiler.OkHttpProfilerInterceptor;
-
-in your code.
-
-**Also the OkHttp client was excluded from okhttpprofiler, so feel free to include the latest version directly: [OkHttpClient](https://square.github.io/okhttp/ "OkHttp client")**
-
-    implementation("com.squareup.okhttp3:okhttp:4.9.0")
-    
-## End Important
-
-The [OkHttp Profiler plugin](https://plugins.jetbrains.com/plugin/11249-okhttp-profiler "OkHttp Profiler") can show requests from the OkHttp library directly in the Android Studio tool window.
-It supports the OkHttp v3 (http://square.github.io/okhttp/) and the Retrofit v2 (https://square.github.io/retrofit/)
-
-You can **debug OkHttp request** or response headers, inspect the JSON as a tree, as a plain text etc. And you can easily **create a Java/Kotlin model from the data**. 
-Just click the right mouse button on a root element of the tree (or any other), choose Java or Kotlin, and select a folder for a new file in the project.
-
-![Screen2](https://github.com/itkacher/OkHttpProfiler/blob/master/demo.png?raw=true)
-
----
- 
-## Installation 
-
-For installation, you need to include the library to your app build.gradle file
-
-    implementation 'io.nerdythings:okhttpprofiler:1.1.0'
-
-and add Interceptor to okHttpClient in code
-##### For OkHttp
-###### Java
-    OkHttpClient.Builder builder = new OkHttpClient.Builder();
-     if (BuildConfig.DEBUG) {
-         builder.addInterceptor(new OkHttpProfilerInterceptor());
-     }   
-    OkHttpClient client = builder.build(); 
-
-###### Kotlin
+###### OkHttpClient
+```kotlin
     val builder = OkHttpClient.Builder()
     if (BuildConfig.DEBUG) {
         builder.addInterceptor(OkHttpProfilerInterceptor() )
     }    
     val client = builder.build()
-    
+```
+
 ##### For Retrofit
-###### Java
-    OkHttpClient.Builder builder = new OkHttpClient.Builder();
-     if (BuildConfig.DEBUG) {
-         builder.addInterceptor(new OkHttpProfilerInterceptor());
-     }   
-    OkHttpClient client = builder.build(); 
-    Retrofit retrofit = new Retrofit.Builder()
-                ......
-                .client(client)
-                .build();
-                
-                
-###### Kotlin
+```kotlin
     val builder = OkHttpClient.Builder()
     if (BuildConfig.DEBUG) {
         builder.addInterceptor( OkHttpProfilerInterceptor() )
     }    
     val client = builder.build()
     val retrofit = Retrofit.Builder()
-            ......
             .client(client)
             .build()
+```
 
-##### For security reasons we recommend to enable OkHttpProfilerInterceptor only for DEBUG BUILDS! 
-Also Proguard will cut it out in the release build.
+#### Full Readme:
 
-#### And then enable Android Studio plugin
+[OkHttp Profiler library](https://github.com/itkacher/OkHttpProfiler/tree/master/okhttp-profiler "OkHttp Profiler Readme")
 
-https://plugins.jetbrains.com/plugin/11249-okhttp-profiler
+# OkHttp Request Modifier Android Library
 
-![Screen2](https://github.com/itkacher/OkHttpProfiler/blob/master/plugin_install1.png?raw=true)
+Installation:
 
-![Screen3](https://github.com/itkacher/OkHttpProfiler/blob/master/plugin_install2.png?raw=true)
+1. Add libraries to app `build.gradle` file (module level):
+```kotlin
+    releaseImplementation("io.nerdythings:okhttp-requests-modifier-no-op:1.1.0")
+    debugImplementation("io.nerdythings:okhttp-requests-modifier:1.0.0")
+```
+2. Add interceptors to your OkHttp client:
 
-![Screen1](https://github.com/itkacher/OkHttpProfiler/blob/master/screen1.png?raw=true)
+##### For OkHttp
+```kotlin
+    val builder = OkHttpClient.Builder()
+    if (BuildConfig.DEBUG) {
+        builder.addInterceptor(OkHttpRequestModifierInterceptor(applicationContext))
+    }    
+    val client = builder.build()
+```
 
-![Screen4](https://github.com/itkacher/OkHttpProfiler/blob/master/screen2.png?raw=true)
+##### For Retrofit
+```kotlin
+    val builder = OkHttpClient.Builder()
+    if (BuildConfig.DEBUG) {
+        builder.addInterceptor(OkHttpRequestModifierInterceptor(applicationContext))
+    }    
+    val client = builder.build()
+    val retrofit = Retrofit.Builder()
+            .client(client)
+            .build()
+```
 
-**Have fun!**
+3. Call `OkHttpProfilerSettingsActivity` from your code
 
-## Source Codes
-#### [OkHttp Profiler Plugin Sources](https://github.com/gektor650/OkHttpProfiler-AndroidStudio-Plugin "OkHttp Profiler Plugin Sources").
-#### [OkHttp Profiler Android Library](https://github.com/itkacher/OkHttpProfiler "OkHttp Profiler Android Library").
+```kotlin
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        findViewById<View>(R.id.open_settings).setOnClickListener { openSettings() }
+    }
 
+    private fun openSettings() {
+        startActivity(OkHttpProfilerSettingsActivity.getIntent(applicationContext))
+    }
+}
+```
 
+#### Full Readme:
 
-#### Issue with the Android Studio version 4.1 solved in plugin v1.0.13+:
-Unfortunately, Google changed realisation of one class but Intellij doesn't. I fixed it, but Intellij IDEA is no longer supported by the OkHttProfiler.
-
+[OkHttp Request Modifier library](https://github.com/itkacher/OkHttpProfiler/tree/master/okhttp-requests-modifier "OkHttp Request Modifier")
