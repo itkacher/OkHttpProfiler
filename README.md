@@ -1,6 +1,11 @@
-# OkHttp Profiler Android Library
 
-### OkHttp Profiler AndroidStudio Plugin
+# This repository has code of OkHttp Profiler and OkHttp Request Modifier Android Libraries
+
+[OkHttp Profiler Android Library](https://github.com/itkacher/OkHttpProfiler/tree/master?tab=readme-ov-file#okhttp-profiler-android-library "OkHttp Profiler")
+
+[OkHttp Request Modifier Android Library](https://github.com/itkacher/OkHttpProfiler/tree/master?tab=readme-ov-file#okhttp-request-modifier-android-library "OkHttp Request Modifier")
+
+## OkHttp Profiler Android Library
 
 ### Video Instructions On Youtube 
 [![Video Instructions on](https://github.com/itkacher/OkHttpProfiler/blob/master/demo.png?raw=true)](https://youtu.be/KI_1-rUMjEI?si=EpXpMZncTNf53wxB&t=458 "YouTube.com")
@@ -38,7 +43,7 @@ implementation("io.nerdythings:okhttp-profiler:1.1.1")
 
 [OkHttp Profiler library](https://github.com/itkacher/OkHttpProfiler/tree/master/okhttp-profiler "OkHttp Profiler Readme")
 
-# OkHttp Request Modifier Android Library
+## OkHttp Request Modifier Android Library
 
 Installation:
 
