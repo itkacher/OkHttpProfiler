@@ -14,6 +14,7 @@ import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.File
 import java.util.UUID
+import java.util.regex.PatternSyntaxException
 
 class DataModifier(private val context: Context) {
 
@@ -46,10 +47,14 @@ class DataModifier(private val context: Context) {
 
     private fun getAllFilesByPath(path: String): List<File> =
         pathModifiersList.mapNotNull {
-            val matches = Regex(it.first).matches(path)
-            if (matches) {
-                File(context.cacheDir, it.second).takeIf { file -> file.exists() }
-            } else {
+            try {
+                val matches = Regex(it.first).matches(path)
+                if (matches) {
+                    File(context.cacheDir, it.second).takeIf { file -> file.exists() }
+                } else {
+                    null
+                }
+            } catch (e: PatternSyntaxException) {
                 null
             }
         }
