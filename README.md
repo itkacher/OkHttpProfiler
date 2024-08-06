@@ -65,8 +65,8 @@ response codes dynamically.
 
 1. Add libraries to app `build.gradle` file (module level):
 ```kotlin
-    releaseImplementation("io.nerdythings:okhttp-requests-modifier-no-op:1.1.0")
-    debugImplementation("io.nerdythings:okhttp-requests-modifier:1.0.0")
+    releaseImplementation("io.nerdythings:okhttp-requests-modifier-no-op:1.0.1")
+    debugImplementation("io.nerdythings:okhttp-requests-modifier:1.0.1")
 ```
 2. Add interceptors to your OkHttp client:
 

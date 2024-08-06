@@ -11,8 +11,8 @@ response codes dynamically.
 For installation, you need to include the library to your app build.gradle file
 
 ```kotlin
-    releaseImplementation("io.nerdythings:okhttp-requests-modifier-no-op:1.0.0")
-    debugImplementation("'io.nerdythings:okhttp-requests-modifier:1.0.0")
+    releaseImplementation("io.nerdythings:okhttp-requests-modifier-no-op:1.0.1")
+    debugImplementation("'io.nerdythings:okhttp-requests-modifier:1.0.1")
 ```
 
 and add an Interceptor to the OkHttpClient in the code
