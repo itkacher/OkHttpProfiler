@@ -53,6 +53,9 @@ implementation("io.nerdythings:okhttp-profiler:1.1.1")
 
 ## OkHttp Request Modifier Android Library
 
+### Video Instructions On [Youtube](https://www.youtube.com/watch?v=TrGYjPizNAQ "YouTube.com")
+[![Video Instructions on](https://github.com/itkacher/OkHttpProfiler/blob/master/images/okhttp-request-modifier.jpg?raw=true)](https://www.youtube.com/watch?v=TrGYjPizNAQ "YouTube.com")
+
 Request Modifier is a new Android library designed to provide developers with an easy way to
 customize HTTP responses.
 By adding this library into your project, you gain the ability to modify response bodies and
