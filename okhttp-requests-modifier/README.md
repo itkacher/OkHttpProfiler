@@ -54,10 +54,18 @@ Call `OkHttpProfilerSettingsActivity` from your code
 ```kotlin
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        
-        findViewById<View>(R.id.open_settings).setOnClickListener { openSettings() }
+         super.onCreate(savedInstanceState)
+         setContent { 
+             Column(
+                verticalArrangement = Arrangement.Center, 
+                horizontalAlignment = Alignment.CenterHorizontally, 
+                modifier = Modifier.fillMaxSize(),
+              ) {
+                Button(onClick = ::openSettings) {
+                   Text(text = stringResource(id = R.string.open_modifier))
+                } 
+             }
+         }
     }
 
     private fun openSettings() {
@@ -93,16 +101,24 @@ To define custom responses, follow these steps:
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        
-        findViewById<View>(R.id.open_settings).setOnClickListener { openSettings() }
-    }
+   override fun onCreate(savedInstanceState: Bundle?) {
+      super.onCreate(savedInstanceState)
+      setContent {
+         Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize(),
+         ) {
+            Button(onClick = ::openSettings) {
+               Text(text = stringResource(id = R.string.open_modifier))
+            }
+         }
+      }
+   }
 
-    private fun openSettings() {
-        startActivity(OkHttpProfilerSettingsActivity.getIntent(applicationContext))
-    }
+   private fun openSettings() {
+      startActivity(OkHttpProfilerSettingsActivity.getIntent(applicationContext))
+   }
 }
 ```
 

@@ -100,9 +100,17 @@ response codes dynamically.
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        
-        findViewById<View>(R.id.open_settings).setOnClickListener { openSettings() }
+        setContent {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                Button(onClick = ::openSettings) {
+                    Text(text = stringResource(id = R.string.open_modifier))
+                }
+            }
+        }
     }
 
     private fun openSettings() {
