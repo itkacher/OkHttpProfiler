@@ -56,7 +56,7 @@ dependencies {
 
 ext {
     artifactId = "okhttp-requests-modifier"
-    releaseVersion = "1.0.1"
+    releaseVersion = "1.0.2"
     libraryDescription = 'OkHttp Client request changer. It can rewrite response code and body.'
 }
 
