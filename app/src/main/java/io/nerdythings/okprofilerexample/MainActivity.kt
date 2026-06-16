@@ -11,21 +11,35 @@ import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.lifecycleScope
 import com.localebro.okprofilerexample.BuildConfig
 import com.localebro.okprofilerexample.R
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.api.createClientPlugin
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import io.nerdythings.okhttp.modifier.interceptor.OkHttpRequestModifierInterceptor
 import io.nerdythings.okhttp.modifier.settings.OkHttpProfilerSettingsActivity
 import io.nerdythings.okhttp.profiler.OkHttpProfilerInterceptor
-import okhttp3.Call
-import okhttp3.Callback
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import retrofit2.Retrofit
-import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mClient: OkHttpClient
+
+    val loggingPlugin = createClientPlugin("LoggingPlugin") {
+
+        onResponse { response ->
+            println("LSS_TK Response: ${response.status}")
+            println("LSS_TK Response headers: ${response.headers}")
+            println("LSS_TK Response body: ${response.bodyAsText()}")
+        }
+    }
+
+    private val client = HttpClient {
+        install(loggingPlugin)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,24 +75,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sendRequest() {
-        val request: Request = Request.Builder()
-            .url(JSON_URL)
-            .get()
-            .build()
+//        val request: Request = Request.Builder()
+//            .url(JSON_URL)
+//            .get()
+//            .build()
+        println("LSS_TK Sending request to: $JSON_URL")
 
-        mClient.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-            }
+        lifecycleScope.launch {
+            client.get(JSON_URL)
+        }
 
-            @Suppress("unused")
-            override fun onResponse(call: Call, response: Response) {
-                try {
-                    val unusedText = response.body?.toString()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-        })
+//        mClient.newCall(request).enqueue(object : Callback {
+//            override fun onFailure(call: Call, e: IOException) {
+//            }
+//
+//            @Suppress("unused")
+//            override fun onResponse(call: Call, response: Response) {
+//                try {
+//                    val unusedText = response.body?.toString()
+//                } catch (e: IOException) {
+//                    e.printStackTrace()
+//                }
+//            }
+//        })
     }
 
     private fun openSettings() {
